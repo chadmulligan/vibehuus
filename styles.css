@@ -1,0 +1,301 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blue: #2e72b8;
+  --blue-deep: #1f5a99;
+  --blue-dim: #8aaed0;
+  --bg: #ffffff;
+  --page: #f4f6f9;
+}
+
+body {
+  background: var(--page);
+  font-family: "Space Mono", ui-monospace, monospace;
+  color: var(--blue);
+  min-height: 100vh;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── POSTER ── */
+.poster {
+  width: 100%;
+  max-width: min(1500px, calc((100vh - 32px) * 1900 / 1200));
+  aspect-ratio: 1900 / 1200;
+  background: var(--bg);
+  border: 2px solid var(--blue);
+  position: relative;
+  overflow: hidden;
+}
+
+canvas#scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* ── TITLE ──
+   `left: X%` is the LEFT EDGE of the title block. Both .title and
+   .subtitle inherit `text-align: left`, so they start at the same x
+   (= this left edge). To shift the whole block left/right, change
+   just the `left:` value below. */
+.title-block {
+  position: absolute;
+  top: 4.5%;
+  left: 35%;
+  z-index: 5;
+}
+
+.title {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(56px, 7vw, 110px);
+  letter-spacing: -0.005em;
+  line-height: 0.88;
+}
+
+.subtitle {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-size: clamp(11px, 1.05vw, 16px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: clamp(6px, 0.8vw, 12px);
+  color: var(--blue);
+}
+
+/* White halo around all foreground text so it stays readable when the
+   river passes underneath. Same colour as the page so it's invisible
+   on white but knocks back the river beneath the glyphs. */
+.title,
+.subtitle,
+.label,
+.guide-tag,
+.pos-chip {
+  paint-order: stroke fill;
+}
+.title,
+.subtitle,
+.label,
+.guide-tag {
+  text-shadow:
+    2px 0 0 var(--bg),
+    -2px 0 0 var(--bg),
+    0 2px 0 var(--bg),
+    0 -2px 0 var(--bg),
+    1.5px 1.5px 0 var(--bg),
+    -1.5px -1.5px 0 var(--bg),
+    1.5px -1.5px 0 var(--bg),
+    -1.5px 1.5px 0 var(--bg);
+}
+
+/* ── MARKERS ── */
+.marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.marker[data-id] {
+  touch-action: none;
+  user-select: none;
+  /* Positioned by scene.js from RIVER_POINTS at startup; hidden until
+     then so they don't flash at (0,0) before JS runs. */
+  visibility: hidden;
+}
+
+/* ── VIEW / EDIT MODE TOGGLE ──
+   Default = clean view: hide the guide markers, the dots on labelled
+   markers, and the position chips, so only the labels + river show.
+   Set `data-mode="edit"` on <body> to bring all of them back for
+   repositioning / debugging. */
+.marker.guide,
+.dot,
+.pos-chip {
+  display: none;
+}
+body[data-mode="edit"] .marker.guide,
+body[data-mode="edit"] .dot,
+body[data-mode="edit"] .pos-chip {
+  display: block;
+}
+.marker[data-id] .dot {
+  cursor: grab;
+}
+.marker[data-id].dragging .dot {
+  cursor: grabbing;
+}
+
+.dot {
+  width: clamp(14px, 1.2vw, 20px);
+  height: clamp(14px, 1.2vw, 20px);
+  background: var(--bg);
+  border: 2.5px solid var(--blue);
+  border-radius: 50%;
+}
+
+/* Guide handles — non-marker control points (entry, internal guides, exit) */
+.marker.guide .dot {
+  width: 12px;
+  height: 12px;
+  border: 1.5px dashed var(--blue-dim);
+  background: var(--bg);
+}
+.marker.guide .pos-chip {
+  background: var(--blue-dim);
+  color: var(--bg);
+}
+.guide-tag {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Space Mono", monospace;
+  font-size: 9px;
+  color: var(--blue-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Position chip — sits above each draggable dot */
+.pos-chip {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--blue);
+  padding: 2px 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 20;
+  letter-spacing: 0.04em;
+}
+.marker.dragging .pos-chip {
+  background: var(--blue-deep);
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  color: var(--blue);
+  font-size: clamp(11px, 1.05vw, 15px);
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.label.right {
+  left: calc(clamp(14px, 1.2vw, 20px) + 14px);
+}
+.label.left {
+  right: calc(clamp(14px, 1.2vw, 20px) + 14px);
+  text-align: right;
+}
+
+.label.strong {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* Date + time labels: 50% bigger than other labels */
+.marker[data-id="date"] .label {
+  font-size: clamp(16px, 1.575vw, 22px);
+}
+
+/* Haus label: anchor the dot to the label's lower-left corner so the
+   multi-line address sits ABOVE the river (not centered on it). */
+.marker[data-id="haus"] .label.right {
+  top: auto;
+  bottom: 50%;
+  transform: none;
+  left: 50%;
+  padding: 0 0 4px 6px;
+}
+
+/* ── SIGN-UP — square, contiguous input + button ── */
+.signup {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 15;
+}
+
+.signup input,
+.signup button {
+  font-family: "Space Mono", monospace;
+  font-size: clamp(10px, 0.85vw, 13px);
+  border: 1.5px solid var(--blue);
+  padding: 7px 14px;
+  line-height: 1.2;
+  border-radius: 0;
+}
+
+.signup input {
+  background: var(--bg);
+  color: var(--blue);
+  width: clamp(190px, 17vw, 250px);
+  border-right: none;
+  outline: none;
+  text-align: left;
+  letter-spacing: 0.04em;
+}
+.signup input::placeholder {
+  color: var(--blue);
+  opacity: 0.5;
+}
+.signup input:focus {
+  border-color: var(--blue-deep);
+}
+
+.signup button {
+  background: var(--blue);
+  color: var(--bg);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.signup button:hover {
+  background: var(--blue-deep);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 720px) {
+  .poster {
+    aspect-ratio: 720 / 1200;
+  }
+  .title-block {
+    left: 32%;
+    top: 3%;
+  }
+  .label {
+    font-size: 11px;
+  }
+  .signup input {
+    width: 180px;
+  }
+}

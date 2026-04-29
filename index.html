@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibehuus — a day dedicated to vibecode mastering</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="poster">
+      <canvas id="scene"></canvas>
+
+      <div class="title-block">
+        <div class="title">Vibehuus</div>
+        <div class="subtitle">a day dedicated to vibecode mastering</div>
+      </div>
+
+      <!-- Marker positions are driven by RIVER_POINTS in scene.js.
+           Edit values there; markers reposition themselves on reload. -->
+
+      <!-- Guide handles (non-marker river control points) -->
+      <div class="marker guide" data-id="entry">
+        <div class="dot"></div>
+        <div class="guide-tag">entry</div>
+      </div>
+      <div class="marker guide" data-id="topguide">
+        <div class="dot"></div>
+        <div class="guide-tag">guide</div>
+      </div>
+      <div class="marker guide" data-id="guide2">
+        <div class="dot"></div>
+        <div class="guide-tag">guide</div>
+      </div>
+
+      <!-- Haus am Fluss — venue -->
+      <div class="marker" data-id="haus">
+        <div class="dot"></div>
+        <div class="label right strong">
+          Haus am Fluss<br />Altenbergstr. 29 | Bern
+        </div>
+      </div>
+      <div class="marker guide" data-id="guide3">
+        <div class="dot"></div>
+        <div class="guide-tag">guide</div>
+      </div>
+
+      <!-- Date + time -->
+      <div class="marker" data-id="date">
+        <div class="dot"></div>
+        <div class="label left strong">Friday 05th June 2026</div>
+        <div class="label right strong">9h–16h</div>
+      </div>
+
+      <!-- Between Date+Time and Enterprise — extra guides -->
+      <div class="marker guide" data-id="between">
+        <div class="dot"></div>
+        <div class="guide-tag">between</div>
+      </div>
+      <div class="marker guide" data-id="between2">
+        <div class="dot"></div>
+        <div class="guide-tag">between</div>
+      </div>
+      <div class="marker guide" data-id="between3">
+        <div class="dot"></div>
+        <div class="guide-tag">between</div>
+      </div>
+
+      <!-- Agenda -->
+      <div class="marker" data-id="art">
+        <div class="dot"></div>
+        <div class="label right">Vibecode: from craft to art</div>
+      </div>
+
+      <div class="marker" data-id="enterprise">
+        <div class="dot"></div>
+        <div class="label right">Entreprise grade vibecoding frameworks</div>
+      </div>
+
+      <div class="marker" data-id="vibecode">
+        <div class="dot"></div>
+        <div class="label right">Vibecode reviewing</div>
+      </div>
+
+      <div class="marker" data-id="vibehaton">
+        <div class="dot"></div>
+        <div class="label right">Vibehaton workshop</div>
+      </div>
+
+      <div class="marker" data-id="apero">
+        <div class="dot"></div>
+        <div class="label right">Apero am Fluss</div>
+      </div>
+
+      <!-- Exit handle -->
+      <div class="marker guide" data-id="exit">
+        <div class="dot"></div>
+        <div class="guide-tag">exit</div>
+      </div>
+
+      <!-- Sign-up -->
+      <form class="signup" onsubmit="event.preventDefault()">
+        <input
+          type="email"
+          placeholder="your email address"
+          aria-label="your email address"
+        />
+        <button type="submit">I am interested</button>
+      </form>
+    </div>
+
+    <script src="scene.js"></script>
+  </body>
+</html>
