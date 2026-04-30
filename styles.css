@@ -116,17 +116,15 @@ canvas#scene {
 }
 
 /* ── VIEW / EDIT MODE TOGGLE ──
-   Default = clean view: hide the guide markers, the dots on labelled
-   markers, and the position chips, so only the labels + river show.
-   Set `data-mode="edit"` on <body> to bring all of them back for
-   repositioning / debugging. */
+   Default = clean view: hide the structural guide markers and the
+   debug position chips. Labelled markers keep their dots — they're
+   the anchor visuals for each stop along the river. Set
+   `data-mode="edit"` on <body> to bring guides + chips back. */
 .marker.guide,
-.dot,
 .pos-chip {
   display: none;
 }
 body[data-mode="edit"] .marker.guide,
-body[data-mode="edit"] .dot,
 body[data-mode="edit"] .pos-chip {
   display: block;
 }
