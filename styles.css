@@ -221,14 +221,16 @@ body[data-mode="edit"] .pos-chip {
   font-size: clamp(16px, 1.575vw, 22px);
 }
 
-/* Haus label: anchor the dot to the label's lower-left corner so the
-   multi-line address sits ABOVE the river (not centered on it). */
+/* Haus label: dot sits at the label's lower-left corner so the
+   multi-line address rises ABOVE the river. The 100% + 3px offsets
+   place the label just past the dot's top-right edge, giving a small
+   breathing gap between dot and text. */
 .marker[data-id="haus"] .label.right {
   top: auto;
-  bottom: 50%;
+  bottom: calc(100% + 3px);
   transform: none;
-  left: 50%;
-  padding: 0 0 4px 6px;
+  left: calc(100% + 3px);
+  padding: 0;
 }
 
 /* ── SIGN-UP — square, contiguous input + button ── */
