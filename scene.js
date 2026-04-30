@@ -27,11 +27,12 @@ const RIVER_POINTS = [
   [0.565, 0.479], //   between
   [0.454, 0.505], //   between2
   [0.347, 0.489], //   between3
-  [0.347, 0.592], // ★ Vibecode: from craft to art
-  [0.352, 0.644], // ★ Entreprise grade
-  [0.356, 0.698], // ★ Vibecode reviewing
-  [0.362, 0.771], // ★ Vibehaton workshop
-  [0.37, 0.862], // ★ Apero by the Aare
+  [0.343, 0.56], // ★ Talks
+  [0.347, 0.6], // ★ Vibecode: from craft to art
+  [0.352, 0.64], // ★ Entreprise grade
+  [0.356, 0.68], // ★ Vibecode reviewing
+  [0.363, 0.75], // ★ Vibehaton workshop
+  [0.37, 0.82], // ★ Apero by the Aare
   [0.386, 1.0], //   exit
 ];
 
@@ -277,12 +278,13 @@ if (!started) {
     between: 6,
     between2: 7,
     between3: 8,
-    art: 9,
-    enterprise: 10,
-    vibecode: 11,
-    vibehaton: 12,
-    apero: 13,
-    exit: 14,
+    talks: 9,
+    art: 10,
+    enterprise: 11,
+    vibecode: 12,
+    vibehaton: 13,
+    apero: 14,
+    exit: 15,
   };
 
   let rebuildPending = false;
