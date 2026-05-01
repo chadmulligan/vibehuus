@@ -182,7 +182,7 @@
           checkValid();
         };
         try {
-          if (localStorage.getItem(SUBMITTED_KEY) === "1") markSubmitted();
+          if (localStorage.getItem(SUBMITTED_KEY)) markSubmitted();
         } catch {}
 
         const collapse = () => {
@@ -220,7 +220,7 @@
             });
             if (!res.ok) throw new Error("submit failed");
             try {
-              localStorage.setItem(SUBMITTED_KEY, "1");
+              localStorage.setItem(SUBMITTED_KEY, new Date().toISOString());
             } catch {}
             markSubmitted();
           } catch {
