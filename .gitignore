@@ -1,5 +1,72 @@
+# OS
 .DS_Store
-*.log
-node_modules/
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editors / IDEs
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+.sublime-workspace
+.sublime-project
+*.code-workspace
+.history/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node / package managers
+node_modules/
+jspm_packages/
+.npm
+.yarn/
+.yarn-integrity
+.pnp
+.pnp.js
+.pnpm-store/
+
+# Build output / caches
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.vite/
+.turbo/
+.eslintcache
+.stylelintcache
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Coverage / test output
+coverage/
+.nyc_output/
+
+# Local Claude / agent state
+.claude/
+
+# Misc
+*.bak
+*.tmp
+*.orig
