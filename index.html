@@ -103,16 +103,90 @@
       </div>
 
       <!-- Sign-up -->
-      <form class="signup" onsubmit="event.preventDefault()">
-        <input
-          type="email"
-          placeholder="your email address"
-          aria-label="your email address"
-        />
-        <button type="submit">I am interested</button>
+      <form class="signup" data-state="collapsed" novalidate>
+        <div class="signup-fields" inert>
+          <input
+            type="text"
+            name="name"
+            placeholder="your name"
+            aria-label="your name"
+            autocomplete="name"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="your email address"
+            aria-label="your email address"
+            autocomplete="email"
+          />
+          <input
+            class="signup-honeypot"
+            type="text"
+            name="_gotcha"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+        </div>
+        <button type="submit">
+          <span class="signup-label" data-for="collapsed">I am interested</span>
+          <span class="signup-label" data-for="expanded">Submit</span>
+          <span class="signup-label" data-for="submitted">
+            Thanks!
+            <span class="signup-sublabel">we'll be in touch shortly</span>
+          </span>
+        </button>
       </form>
     </div>
 
     <script src="scene.js"></script>
+    <script>
+      (() => {
+        const form = document.querySelector(".signup");
+        if (!form) return;
+        const fields = form.querySelector(".signup-fields");
+        const nameInput = form.querySelector('input[name="name"]');
+        const emailInput = form.querySelector('input[name="email"]');
+        const honeypot = form.querySelector(".signup-honeypot");
+
+        const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        const checkValid = () => {
+          const nameOk = nameInput.value.trim().length > 0;
+          const emailOk = EMAIL_RE.test(emailInput.value.trim());
+          form.dataset.valid = nameOk && emailOk ? "true" : "false";
+        };
+        nameInput.addEventListener("input", checkValid);
+        emailInput.addEventListener("input", checkValid);
+        checkValid();
+
+        form.addEventListener("submit", (e) => {
+          if (form.dataset.state === "collapsed") {
+            e.preventDefault();
+            form.dataset.state = "expanded";
+            fields.inert = false;
+            setTimeout(() => nameInput.focus(), 60);
+            return;
+          }
+          if (form.dataset.state === "submitted") {
+            e.preventDefault();
+            return;
+          }
+          if (form.dataset.valid !== "true") {
+            e.preventDefault();
+            return;
+          }
+          if (honeypot.value) {
+            e.preventDefault();
+            return;
+          }
+          // To enable real submission, set
+          //   action="https://formspree.io/f/YOUR_ID" method="POST"
+          // on the <form> and delete the preventDefault below.
+          e.preventDefault();
+          form.dataset.state = "submitted";
+          fields.inert = true;
+        });
+      })();
+    </script>
   </body>
 </html>

@@ -233,41 +233,62 @@ body[data-mode="edit"] .pos-chip {
   padding: 0;
 }
 
-/* ── SIGN-UP — square, contiguous input + button ── */
+/* ── SIGN-UP — collapsible vertical stack, contiguous frame ── */
 .signup {
   position: absolute;
   bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
+  flex-direction: column;
+  width: clamp(176px, 17.6vw, 256px);
+  border: 1.5px solid var(--blue);
+  background: var(--bg);
   z-index: 15;
+}
+
+.signup-fields {
+  display: flex;
+  flex-direction: column;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 280ms ease;
+}
+.signup[data-state="expanded"] .signup-fields {
+  max-height: 200px;
 }
 
 .signup input,
 .signup button {
   font-family: "Space Mono", monospace;
   font-size: clamp(10px, 0.85vw, 13px);
-  border: 1.5px solid var(--blue);
-  padding: 7px 14px;
+  padding: 9px 14px;
   line-height: 1.2;
+  border: none;
   border-radius: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
 }
 
-.signup input {
+.signup-fields input {
   background: var(--bg);
   color: var(--blue);
-  width: clamp(190px, 17vw, 250px);
-  border-right: none;
+  border-bottom: 1.5px solid var(--blue);
   outline: none;
   text-align: left;
   letter-spacing: 0.04em;
 }
-.signup input::placeholder {
+.signup-fields input::placeholder {
   color: var(--blue);
   opacity: 0.5;
 }
-.signup input:focus {
-  border-color: var(--blue-deep);
+.signup-fields input:focus {
+  background: rgba(46, 114, 184, 0.06);
+}
+
+.signup-honeypot {
+  display: none !important;
 }
 
 .signup button {
@@ -277,10 +298,47 @@ body[data-mode="edit"] .pos-chip {
   text-transform: uppercase;
   letter-spacing: 0.18em;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, opacity 0.2s ease;
 }
 .signup button:hover {
   background: var(--blue-deep);
+}
+
+/* Greyed-out submit while expanded fields are incomplete/invalid */
+.signup[data-state="expanded"][data-valid="false"] button {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.signup[data-state="expanded"][data-valid="false"] button:hover {
+  background: var(--blue);
+}
+
+/* Terminal post-submit: button stays "Thanks!" but inert */
+.signup[data-state="submitted"] button {
+  cursor: default;
+  opacity: 0.75;
+}
+.signup[data-state="submitted"] button:hover {
+  background: var(--blue);
+}
+
+.signup-label {
+  display: none;
+}
+.signup[data-state="collapsed"] .signup-label[data-for="collapsed"],
+.signup[data-state="expanded"] .signup-label[data-for="expanded"],
+.signup[data-state="submitted"] .signup-label[data-for="submitted"] {
+  display: inline-block;
+}
+
+.signup-sublabel {
+  display: block;
+  margin-top: 4px;
+  font-size: clamp(9px, 0.75vw, 12px);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  opacity: 0.85;
 }
 
 /* ── MOBILE ── */
@@ -295,7 +353,7 @@ body[data-mode="edit"] .pos-chip {
   .label {
     font-size: 11px;
   }
-  .signup input {
-    width: 180px;
+  .signup {
+    width: 192px;
   }
 }
