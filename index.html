@@ -103,7 +103,13 @@
       </div>
 
       <!-- Sign-up -->
-      <form class="signup" data-state="collapsed" novalidate>
+      <form
+        class="signup"
+        data-state="collapsed"
+        novalidate
+        action="https://formspree.io/f/xojrqbbg"
+        method="POST"
+      >
         <div class="signup-fields" inert>
           <input
             type="text"
@@ -123,6 +129,14 @@
             class="signup-honeypot"
             type="text"
             name="_gotcha"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+          <input
+            class="signup-honeypot"
+            type="text"
+            name="company"
             tabindex="-1"
             autocomplete="off"
             aria-hidden="true"
@@ -147,7 +161,7 @@
         const fields = form.querySelector(".signup-fields");
         const nameInput = form.querySelector('input[name="name"]');
         const emailInput = form.querySelector('input[name="email"]');
-        const honeypot = form.querySelector(".signup-honeypot");
+        const honeypots = form.querySelectorAll(".signup-honeypot");
 
         const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
         const checkValid = () => {
@@ -159,32 +173,30 @@
         emailInput.addEventListener("input", checkValid);
         checkValid();
 
-        form.addEventListener("submit", (e) => {
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
           if (form.dataset.state === "collapsed") {
-            e.preventDefault();
             form.dataset.state = "expanded";
             fields.inert = false;
             setTimeout(() => nameInput.focus(), 60);
             return;
           }
-          if (form.dataset.state === "submitted") {
-            e.preventDefault();
-            return;
+          if (form.dataset.state === "submitted") return;
+          if (form.dataset.valid !== "true") return;
+          if ([...honeypots].some((h) => h.value)) return;
+
+          try {
+            const res = await fetch(form.action, {
+              method: "POST",
+              body: new FormData(form),
+              headers: { Accept: "application/json" },
+            });
+            if (!res.ok) throw new Error("submit failed");
+            form.dataset.state = "submitted";
+            fields.inert = true;
+          } catch {
+            form.dataset.valid = "false";
           }
-          if (form.dataset.valid !== "true") {
-            e.preventDefault();
-            return;
-          }
-          if (honeypot.value) {
-            e.preventDefault();
-            return;
-          }
-          // To enable real submission, set
-          //   action="https://formspree.io/f/YOUR_ID" method="POST"
-          // on the <form> and delete the preventDefault below.
-          e.preventDefault();
-          form.dataset.state = "submitted";
-          fields.inert = true;
         });
       })();
     </script>
