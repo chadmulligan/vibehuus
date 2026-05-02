@@ -111,6 +111,79 @@ function strokeRiver(g, samples, width, color) {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
+// Cartographic embellishments — contour hills in the empty side strips, a
+// compass rose top-left, and tick marks along the top/bottom borders. Pure
+// decoration to fill the bare canvas around the river. Drawn into bgCanvas
+// BEFORE the river so the river overlays anything it crosses.
+
+// Wave-topo strips fill the empty left and right thirds. Each strip has a
+// "carrier" — a sum of two low-frequency sines seeded per strip — that all
+// lines in the strip ride along, scaled slightly differently per line. The
+// shared carrier gives the topographic look (neighbours track each other);
+// the per-line scaling and wiggle break dead parallelism.
+// Right strip mirrors the left: same seed → same carrier shape, `mirror`
+// negates the horizontal offset so bends flip across the page axis. xStart
+// > xEnd on the right so iteration runs outer→inner on both sides, matching
+// the left's line ordering.
+const WAVE_STRIPS = [
+  { xStart: 0.04, xEnd: 0.22, count: 9, seed: 30, mirror: false },
+  { xStart: 0.96, xEnd: 0.78, count: 9, seed: 30, mirror: true },
+];
+
+function seededRand(seed, k) {
+  const x = Math.sin(seed * 12.9898 + k * 78.233) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+function drawCartography(g) {
+  g.save();
+
+  g.strokeStyle = "rgba(117, 172, 210, 0.34)";
+  g.lineWidth = 1;
+  for (const strip of WAVE_STRIPS) {
+    const sr = (k) => seededRand(strip.seed, k);
+    // Carrier — the strip's overall topographic shape.
+    const c = {
+      a1: W * (0.022 + 0.014 * sr(1)), // big sweep ~40–65px on 1800 wide
+      f1: 0.35 + 0.5 * sr(2), //          0.35–0.85 cycles over H
+      p1: sr(3) * Math.PI * 2,
+      a2: W * (0.007 + 0.006 * sr(4)),
+      f2: 1.0 + 0.8 * sr(5),
+      p2: sr(6) * Math.PI * 2,
+    };
+
+    const flip = strip.mirror ? -1 : 1;
+    for (let i = 0; i < strip.count; i++) {
+      const t = strip.count === 1 ? 0.5 : i / (strip.count - 1);
+      const baseX = (strip.xStart + (strip.xEnd - strip.xStart) * t) * W;
+      const lr = (k) => seededRand(strip.seed * 100 + i + 1, k);
+      const ampScale1 = 0.72 + 0.56 * lr(1); // 0.72–1.28
+      const ampScale2 = 0.55 + 0.9 * lr(2);
+      const wiggleA = W * 0.004;
+      const wiggleF = 1.6 + 1.4 * lr(3);
+      const wiggleP = lr(4) * Math.PI * 2;
+
+      g.beginPath();
+      const steps = 140;
+      for (let s = 0; s <= steps; s++) {
+        const y = (s / steps) * H;
+        const yt = y / H;
+        const offset =
+          c.a1 * ampScale1 * Math.sin(2 * Math.PI * c.f1 * yt + c.p1) +
+          c.a2 * ampScale2 * Math.sin(2 * Math.PI * c.f2 * yt + c.p2) +
+          wiggleA * Math.sin(2 * Math.PI * wiggleF * yt + wiggleP);
+        const x = baseX + flip * offset;
+        if (s === 0) g.moveTo(x, y);
+        else g.lineTo(x, y);
+      }
+      g.stroke();
+    }
+  }
+
+  g.restore();
+}
+
+// ────────────────────────────────────────────────────────────────────────────
 // Background — white plate plus the river. Drawn once per resize.
 
 function buildBackground() {
@@ -122,6 +195,8 @@ function buildBackground() {
 
   g.fillStyle = "#FFFFFF";
   g.fillRect(0, 0, W, H);
+
+  drawCartography(g);
 
   const samplesPx = riverSamples.map((s) => ({ x: s.x, y: s.y }));
 
