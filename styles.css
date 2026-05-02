@@ -46,14 +46,15 @@ canvas#scene {
 }
 
 /* ── TITLE ──
-   `left: X%` is the LEFT EDGE of the title block. Both .title and
-   .subtitle inherit `text-align: left`, so they start at the same x
-   (= this left edge). To shift the whole block left/right, change
-   just the `left:` value below. */
+   Centered horizontally on the poster: `left: 50%` + translateX(-50%)
+   anchors the block's center to the poster's center. Both .title and
+   .subtitle are `text-align: center` so they share the same axis. */
 .title-block {
   position: absolute;
   top: 4.5%;
-  left: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
   z-index: 5;
 }
 
@@ -347,7 +348,6 @@ body[data-mode="edit"] .pos-chip {
     aspect-ratio: 720 / 1200;
   }
   .title-block {
-    left: 32%;
     top: 3%;
   }
   .label {
