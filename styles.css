@@ -29,7 +29,7 @@ body {
 /* ── POSTER ── */
 .poster {
   width: 100%;
-  max-width: min(1500px, calc((100vh - 32px) * 1900 / 1200));
+  max-width: min(1500px, calc((100vh - 80px) * 1900 / 1200));
   aspect-ratio: 1900 / 1200;
   background: var(--bg);
   border: 2px solid var(--blue);
@@ -144,6 +144,14 @@ body[data-mode="edit"] .pos-chip {
   border-radius: 50%;
 }
 
+/* Talk markers — smaller solid-blue dots (diameter = inner white area of a regular dot) */
+.marker.talk .dot {
+  width: clamp(9px, calc(1.2vw - 5px), 15px);
+  height: clamp(9px, calc(1.2vw - 5px), 15px);
+  background: var(--blue);
+  border: none;
+}
+
 /* Guide handles — non-marker control points (entry, internal guides, exit) */
 .marker.guide .dot {
   width: 12px;
@@ -218,8 +226,14 @@ body[data-mode="edit"] .pos-chip {
 }
 
 /* Date + time labels: 50% bigger than other labels */
-.marker[data-id="date"] .label {
+.marker[data-id="date"] .label,
+.marker[data-id="haus"] .label,
+.marker[data-id="talks"] .label,
+.marker[data-id="vibehaton"] .label,
+.marker[data-id="apero"] .label {
   font-size: clamp(16px, 1.575vw, 22px);
+  letter-spacing: 0.08em;
+  word-spacing: -0.05em;
 }
 
 /* Haus label: dot sits at the label's lower-left corner so the
@@ -232,6 +246,11 @@ body[data-mode="edit"] .pos-chip {
   transform: none;
   left: calc(100% + 3px);
   padding: 0;
+  line-height: 1.1;
+}
+
+.marker[data-id="haus"] .label .city {
+  font-size: 0.7em;
 }
 
 /* ── SIGN-UP — collapsible vertical stack, contiguous frame ── */
@@ -340,6 +359,29 @@ body[data-mode="edit"] .pos-chip {
   letter-spacing: 0.06em;
   text-transform: none;
   opacity: 0.85;
+}
+
+/* ── SIGNATURE ── */
+.signature {
+  margin-top: 16px;
+  font-family: "Space Mono", monospace;
+  font-size: clamp(10px, 0.95vw, 14px);
+  letter-spacing: 0.2em;
+  color: var(--blue-dim);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.signature a {
+  color: var(--blue-dim);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--blue-dim);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.signature a:hover {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
 }
 
 /* ── MOBILE ── */

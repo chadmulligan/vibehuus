@@ -18,22 +18,22 @@ let lastT = 0;
 // Only entry, exit, and one off-screen guide at the top (to keep the
 // river clear of the title block) are non-marker points.
 const RIVER_POINTS = [
-  [0.353, 0.0], //   entry
-  [0.331, 0.192], //   topguide
-  [0.431, 0.284], //   guide2
-  [0.552, 0.307], // ★ Haus am Fluss
-  [0.609, 0.339], //   guide3
-  [0.629, 0.396], // ★ Date + Time
-  [0.595, 0.479], //   between
-  [0.484, 0.505], //   between2
-  [0.377, 0.489], //   between3
-  [0.373, 0.56], // ★ Talks
-  [0.377, 0.6], // ★ Vibecode: from craft to art
-  [0.382, 0.64], // ★ Entreprise grade
-  [0.386, 0.68], // ★ Vibecode reviewing
-  [0.393, 0.75], // ★ Vibehaton workshop
-  [0.4, 0.82], // ★ Apero by the Aare
-  [0.416, 1.0], //   exit
+  [0.336, 0.0], //   entry
+  [0.321, 0.187], //   topguide
+  [0.375, 0.316], //   guide2
+  [0.536, 0.329], // ★ Haus am Fluss
+  [0.631, 0.353], //   guide3
+  [0.644, 0.408], // ★ Date + Time
+  [0.623, 0.466], //   between
+  [0.525, 0.495], //   between2
+  [0.412, 0.498], //   between3
+  [0.396, 0.553], // ★ Talks
+  [0.39, 0.594], // ★ Vibecode: from craft to art
+  [0.387, 0.638], // ★ Entreprise grade
+  [0.384, 0.682], // ★ Vibecode reviewing
+  [0.38, 0.749], // ★ Vibehaton workshop
+  [0.375, 0.823], // ★ Apero by the Aare
+  [0.363, 1.0], //   exit
 ];
 
 // ────────────────────────────────────────────────────────────────────────────

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vibehuus — a day dedicated to vibecode mastering</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="stylesheet" href="styles.css?v=6" />
+    <link rel="stylesheet" href="styles.css?v=17" />
   </head>
   <body>
     <div class="poster">
@@ -38,7 +38,9 @@
       <!-- Haus am Fluss — venue -->
       <div class="marker" data-id="haus">
         <div class="dot"></div>
-        <div class="label right strong">Haus am Fluss | Bern</div>
+        <div class="label right strong">
+          Haus am Fluss|<span class="city">Bern</span>
+        </div>
       </div>
       <div class="marker guide" data-id="guide3">
         <div class="dot"></div>
@@ -72,17 +74,17 @@
         <div class="label right strong">Talks</div>
       </div>
 
-      <div class="marker" data-id="art">
+      <div class="marker talk" data-id="art">
         <div class="dot"></div>
         <div class="label right">Vibecode: from craft to art</div>
       </div>
 
-      <div class="marker" data-id="enterprise">
+      <div class="marker talk" data-id="enterprise">
         <div class="dot"></div>
         <div class="label right">Entreprise grade vibecoding frameworks</div>
       </div>
 
-      <div class="marker" data-id="vibecode">
+      <div class="marker talk" data-id="vibecode">
         <div class="dot"></div>
         <div class="label right">Vibecode reviewing</div>
       </div>
@@ -154,6 +156,14 @@
       </form>
     </div>
 
+    <!-- Organisers signature -->
+    <div class="signature">
+      <a href="https://example.com/pawel-kowalski">Pawel Kowalski</a
+      >&nbsp;+&nbsp;<a href="https://example.com/jeremy-isnard"
+        >Jeremy Isnard</a
+      >
+    </div>
+
     <script src="scene.js?v=9"></script>
     <script>
       (() => {
@@ -187,7 +197,8 @@
 
         const collapse = () => {
           if (form.dataset.state !== "expanded") return;
-          if (form.contains(document.activeElement)) document.activeElement.blur();
+          if (form.contains(document.activeElement))
+            document.activeElement.blur();
           form.dataset.state = "collapsed";
           fields.inert = true;
         };
