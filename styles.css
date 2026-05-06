@@ -405,15 +405,10 @@ body[data-mode="edit"] .pos-chip {
      aspect — that way it never overflows on short viewports and never
      leaves a strip of empty space on tall ones. The river coords in
      RIVER_POINTS_MOBILE are normalized 0–1, so they adapt to whatever
-     aspect ratio the screen ends up handing the poster. */
-  html,
+     aspect ratio the screen ends up handing the poster.
+     Page is allowed to scroll — locking to `100dvh` + `overflow: hidden`
+     ends up jumping when the iOS URL bar collapses/expands. */
   body {
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
-  }
-  body {
-    min-height: auto;
     padding: 12px;
     justify-content: flex-start;
   }

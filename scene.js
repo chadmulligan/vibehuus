@@ -311,6 +311,42 @@ class Particle {
 
 // ────────────────────────────────────────────────────────────────────────────
 
+// Map data-id → index in the active river array. Both desktop/mobile arrays
+// share this mapping, so it lives at module scope alongside the marker DOM
+// references — both `init()` (runs on resize) and the editor IIFE need them.
+const ID_TO_RIVER_INDEX = {
+  entry: 0,
+  topguide: 1,
+  guide2: 2,
+  haus: 3,
+  guide3: 4,
+  date: 5,
+  between: 6,
+  between2: 7,
+  between3: 8,
+  talks: 9,
+  art: 10,
+  enterprise: 11,
+  vibecode: 12,
+  vibehaton: 13,
+  apero: 14,
+  exit: 15,
+};
+const MARKERS = document.querySelectorAll(".marker[data-id]");
+
+function placeMarkers() {
+  const points = activeRiverPoints();
+  MARKERS.forEach((m) => {
+    const idx = ID_TO_RIVER_INDEX[m.dataset.id];
+    if (idx !== undefined && points[idx]) {
+      const [x, y] = points[idx];
+      m.style.left = `${(x * 100).toFixed(2)}%`;
+      m.style.top = `${(y * 100).toFixed(2)}%`;
+    }
+    m.style.visibility = "visible";
+  });
+}
+
 function init() {
   if (!W || !H) return;
   const px = activeRiverPoints().map(([x, y]) => [x * W, y * H]);
@@ -319,6 +355,9 @@ function init() {
   // Density tied to river length so longer rivers get more sparkles.
   const target = Math.floor(Math.min(2000, totalLen * 1.4));
   particles = new Array(target).fill(0).map(() => new Particle());
+  // Re-place markers so they track viewport-driven array switches
+  // (mobile↔desktop) and any percentage rounding from the new dimensions.
+  placeMarkers();
 }
 
 function resize() {
@@ -376,26 +415,6 @@ if (!started) {
 // the HTML once you're happy.
 
 (function setupMarkerEditor() {
-  // Map data-id → index in RIVER_POINTS (must match the array above).
-  const ID_TO_RIVER_INDEX = {
-    entry: 0,
-    topguide: 1,
-    guide2: 2,
-    haus: 3,
-    guide3: 4,
-    date: 5,
-    between: 6,
-    between2: 7,
-    between3: 8,
-    talks: 9,
-    art: 10,
-    enterprise: 11,
-    vibecode: 12,
-    vibehaton: 13,
-    apero: 14,
-    exit: 15,
-  };
-
   let rebuildPending = false;
   function scheduleRebuild() {
     if (rebuildPending) return;
@@ -409,31 +428,18 @@ if (!started) {
     });
   }
 
-  const markers = document.querySelectorAll(".marker[data-id]");
-
   function snapshot() {
     const out = {};
-    markers.forEach((m) => {
+    MARKERS.forEach((m) => {
       out[m.dataset.id] = `top: ${m.style.top}; left: ${m.style.left};`;
     });
     return out;
   }
 
-  // Position every marker from the active river — the source of truth for
-  // the current viewport. Edit values in the matching array and reload;
-  // markers follow automatically.
-  const points = activeRiverPoints();
-  markers.forEach((m) => {
-    const idx = ID_TO_RIVER_INDEX[m.dataset.id];
-    if (idx !== undefined && points[idx]) {
-      const [x, y] = points[idx];
-      m.style.left = `${(x * 100).toFixed(2)}%`;
-      m.style.top = `${(y * 100).toFixed(2)}%`;
-    }
-    m.style.visibility = "visible";
-  });
+  // Initial placement happens in init() (which runs on every resize); the
+  // editor only needs to attach drag handlers below.
 
-  markers.forEach((m) => {
+  MARKERS.forEach((m) => {
     const dot = m.querySelector(".dot");
     const chip = document.createElement("div");
     chip.className = "pos-chip";
