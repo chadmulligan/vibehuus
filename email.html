@@ -45,6 +45,121 @@
         text-decoration: none;
       }
 
+      /* --- Type families ---
+         Edit here to change every text element of that family at once. */
+      .vh-mono {
+        font-family: "Space Mono", ui-monospace, Menlo, Consolas,
+          "Courier New", monospace;
+      }
+      .vh-title-text {
+        font-family: "Bebas Neue", Impact, "Arial Narrow Bold", sans-serif;
+        font-size: 96px;
+        line-height: 0.88;
+        letter-spacing: -0.005em;
+        color: #2e72b8;
+      }
+
+      /* --- Element styles ---
+         One class per role. Edit a class to change every instance. */
+      .vh-subtitle {
+        font-size: 12px;
+        line-height: 1.6;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #2e72b8;
+      }
+      .vh-intro {
+        font-size: 13px;
+        line-height: 1.75;
+        letter-spacing: 0.02em;
+        color: #2e72b8;
+        text-align: center;
+      }
+      .vh-meta-label {
+        font-size: 12px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: #8aaed0;
+        line-height: 1;
+      }
+      .vh-meta-value {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.5;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #2e72b8;
+      }
+      .vh-heading {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.4;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #2e72b8;
+        text-align: center;
+      }
+      .vh-talk {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.5;
+        letter-spacing: 0.02em;
+        color: #2e72b8;
+        text-align: center;
+      }
+      .vh-signature {
+        font-size: 12px;
+        line-height: 1.6;
+        letter-spacing: 0.1em;
+        color: #8aaed0;
+        text-align: center;
+      }
+      .vh-cta-cell {
+        background: #2e72b8;
+        border: 1.5px solid #2e72b8;
+      }
+      .vh-cta {
+        display: inline-block;
+        padding: 14px 40px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #ffffff;
+        text-decoration: none;
+      }
+      .vh-footer {
+        font-size: 11px;
+        line-height: 1.6;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #8aaed0;
+      }
+      .vh-link-dim {
+        color: #8aaed0;
+        text-decoration: none;
+      }
+      .vh-link-dotted {
+        color: #8aaed0;
+        text-decoration: none;
+        border-bottom: 1px dotted #8aaed0;
+      }
+
+      /* --- River ---
+         Edit .vh-river-bar `width` to change the line weight everywhere. */
+      .vh-river-cell {
+        background: #75acd2;
+        font-size: 0;
+        line-height: 0;
+        padding: 0;
+      }
+      .vh-river-bar {
+        width: 1px;
+        background: #75acd2;
+        font-size: 0;
+        line-height: 0;
+      }
+
       /* --- Mobile --- */
       @media only screen and (max-width: 620px) {
         .vh-container {
@@ -57,25 +172,20 @@
           padding-left: 20px !important;
           padding-right: 20px !important;
         }
-        .vh-rail {
-          width: 44px !important;
-        }
-        .vh-rail-pad {
-          padding-left: 21px !important;
-          padding-right: 21px !important;
-        }
       }
     </style>
     <!--[if mso]>
       <style type="text/css">
-        .vh-title-text { font-family: Impact, 'Arial Narrow Bold', sans-serif !important; }
-        .vh-mono { font-family: 'Courier New', Courier, monospace !important; }
+        .vh-title-text {
+          font-family: Impact, "Arial Narrow Bold", sans-serif !important;
+        }
+        .vh-mono {
+          font-family: "Courier New", Courier, monospace !important;
+        }
       </style>
     <![endif]-->
   </head>
-  <body
-    style="margin: 0; padding: 0; background: #f4f6f9; color: #2e72b8;"
-  >
+  <body style="margin: 0; padding: 0; background: #f4f6f9; color: #2e72b8">
     <!-- Preheader (hidden, shown in inbox preview) -->
     <div
       style="
@@ -99,10 +209,10 @@
       cellpadding="0"
       cellspacing="0"
       border="0"
-      style="background: #f4f6f9;"
+      style="background: #f4f6f9"
     >
       <tr>
-        <td align="center" style="padding: 32px 16px;">
+        <td align="center" style="padding: 32px 16px">
           <!-- POSTER -->
           <table
             role="presentation"
@@ -123,37 +233,18 @@
               <td
                 align="center"
                 class="vh-pad-x"
-                style="padding: 22px 32px 0 32px;"
+                style="padding: 22px 32px 0 32px"
               >
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 12px;
-                    line-height: 1.6;
-                    letter-spacing: 0.1em;
-                    color: #8aaed0;
-                    text-align: center;
-                  "
-                >
+                <div class="vh-mono vh-signature">
                   <a
                     href="https://example.com/pawel-kowalski"
-                    style="
-                      color: #8aaed0;
-                      text-decoration: none;
-                      border-bottom: 1px dotted #8aaed0;
-                    "
+                    class="vh-link-dotted"
                     >Pawel Kowalski</a
                   >
                   &nbsp;+&nbsp;
                   <a
                     href="https://example.com/jeremy-isnard"
-                    style="
-                      color: #8aaed0;
-                      text-decoration: none;
-                      border-bottom: 1px dotted #8aaed0;
-                    "
+                    class="vh-link-dotted"
                     >Jeremy Isnard</a
                   >
                 </div>
@@ -165,42 +256,20 @@
               <td
                 align="center"
                 class="vh-pad-x"
-                style="padding: 56px 32px 0 32px;"
+                style="padding: 56px 32px 0 32px"
               >
-                <div
-                  class="vh-title-text"
-                  style="
-                    font-family: 'Bebas Neue', Impact, 'Arial Narrow Bold',
-                      sans-serif;
-                    font-size: 96px;
-                    line-height: 0.88;
-                    letter-spacing: -0.005em;
-                    color: #2e72b8;
-                  "
-                >
-                  Vibehuus
-                </div>
+                <div class="vh-title-text">Vibehuus</div>
               </td>
             </tr>
+
             <!-- Subtitle -->
             <tr>
               <td
                 align="center"
                 class="vh-pad-x"
-                style="padding: 14px 32px 28px 32px;"
+                style="padding: 14px 32px 28px 32px"
               >
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 12px;
-                    line-height: 1.6;
-                    letter-spacing: 0.2em;
-                    text-transform: uppercase;
-                    color: #2e72b8;
-                  "
-                >
+                <div class="vh-mono vh-subtitle">
                   Beyond the prototype:<br />vibecoding for production
                 </div>
               </td>
@@ -211,20 +280,9 @@
               <td
                 align="center"
                 class="vh-pad-x"
-                style="padding: 0 48px 16px 48px;"
+                style="padding: 0 48px 16px 48px"
               >
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 13px;
-                    line-height: 1.75;
-                    letter-spacing: 0.02em;
-                    color: #2e72b8;
-                    text-align: center;
-                  "
-                >
+                <div class="vh-mono vh-intro">
                   Free of charge, by invitation only &mdash; a small, focused
                   gathering to reflect on the advancement of vibecoding and
                   explore the techniques to harness it for production-grade
@@ -235,7 +293,7 @@
 
             <!-- Where / When meta strip -->
             <tr>
-              <td class="vh-pad-x" style="padding: 16px 48px 8px 48px;">
+              <td class="vh-pad-x" style="padding: 16px 48px 8px 48px">
                 <table
                   role="presentation"
                   width="100%"
@@ -250,76 +308,30 @@
                       width="50%"
                       style="
                         padding: 16px 12px;
-                        border-right: 1px solid #cfdef0;
+                        border-right: 1px solid #75acd2;
                       "
                     >
+                      <div class="vh-mono vh-meta-label">Where</div>
                       <div
-                        class="vh-mono"
-                        style="
-                          font-family: 'Space Mono', ui-monospace, Menlo,
-                            Consolas, 'Courier New', monospace;
-                          font-size: 10px;
-                          letter-spacing: 0.28em;
-                          text-transform: uppercase;
-                          color: #8aaed0;
-                          line-height: 1;
-                        "
+                        class="vh-mono vh-meta-value"
+                        style="margin-top: 14px"
                       >
-                        Where
-                      </div>
-                      <div
-                        class="vh-mono"
-                        style="
-                          margin-top: 14px;
-                          font-family: 'Space Mono', ui-monospace, Menlo,
-                            Consolas, 'Courier New', monospace;
-                          font-size: 14px;
-                          font-weight: 700;
-                          line-height: 1.5;
-                          letter-spacing: 0.14em;
-                          text-transform: uppercase;
-                          color: #2e72b8;
-                        "
-                      >
-                        Haus am Fluss<br />Bern
+                        Haus am Fluss<br />Altenbergstrasse 29<br />3013 Bern
                       </div>
                     </td>
                     <td
                       valign="top"
                       align="center"
                       width="50%"
-                      style="padding: 16px 12px;"
+                      style="padding: 16px 12px"
                     >
+                      <div class="vh-mono vh-meta-label">When</div>
                       <div
-                        class="vh-mono"
-                        style="
-                          font-family: 'Space Mono', ui-monospace, Menlo,
-                            Consolas, 'Courier New', monospace;
-                          font-size: 10px;
-                          letter-spacing: 0.28em;
-                          text-transform: uppercase;
-                          color: #8aaed0;
-                          line-height: 1;
-                        "
+                        class="vh-mono vh-meta-value"
+                        style="margin-top: 14px"
                       >
-                        When
-                      </div>
-                      <div
-                        class="vh-mono"
-                        style="
-                          margin-top: 14px;
-                          font-family: 'Space Mono', ui-monospace, Menlo,
-                            Consolas, 'Courier New', monospace;
-                          font-size: 14px;
-                          font-weight: 700;
-                          line-height: 1.5;
-                          letter-spacing: 0.14em;
-                          text-transform: uppercase;
-                          color: #2e72b8;
-                        "
-                      >
-                        Friday<br />5<sup style="font-size: 9px;">th</sup>
-                        June 2026
+                        Friday<br />5<sup style="font-size: 9px">th</sup> June
+                        2026<br />9h-17h
                       </div>
                     </td>
                   </tr>
@@ -332,21 +344,9 @@
               <td
                 align="center"
                 class="vh-pad-x"
-                style="padding: 12px 32px 0 32px;"
+                style="padding: 12px 32px 0 32px"
               >
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 10px;
-                    letter-spacing: 0.28em;
-                    text-transform: uppercase;
-                    color: #8aaed0;
-                  "
-                >
-                  Programme
-                </div>
+                <div class="vh-mono vh-meta-label">Programme</div>
               </td>
             </tr>
 
@@ -354,7 +354,10 @@
 
             <!-- entry stub -->
             <tr>
-              <td align="center" style="padding: 0; font-size: 0; line-height: 0;">
+              <td
+                align="center"
+                style="padding: 0; font-size: 0; line-height: 0"
+              >
                 <table
                   align="center"
                   role="presentation"
@@ -363,17 +366,8 @@
                   border="0"
                 >
                   <tr>
-                    <td
-                      bgcolor="#75acd2"
-                      width="2"
-                      style="
-                        background: #75acd2;
-                        font-size: 0;
-                        line-height: 0;
-                        padding: 0;
-                      "
-                    >
-                      <div style="width: 2px; height: 36px; font-size: 0; line-height: 0;">&nbsp;</div>
+                    <td class="vh-river-cell">
+                      <div class="vh-river-bar" style="height: 36px">&nbsp;</div>
                     </td>
                   </tr>
                 </table>
@@ -382,29 +376,17 @@
 
             <!-- TALKS -->
             <tr>
-              <td align="center" class="vh-pad-x" style="padding: 0 32px;">
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 16px;
-                    font-weight: 700;
-                    line-height: 1.4;
-                    letter-spacing: 0.18em;
-                    text-transform: uppercase;
-                    color: #2e72b8;
-                    text-align: center;
-                  "
-                >
-                  Talks
-                </div>
+              <td align="center" class="vh-pad-x" style="padding: 0 32px">
+                <div class="vh-mono vh-heading">Talks</div>
               </td>
             </tr>
 
             <!-- connector -->
             <tr>
-              <td align="center" style="padding: 0; font-size: 0; line-height: 0;">
+              <td
+                align="center"
+                style="padding: 0; font-size: 0; line-height: 0"
+              >
                 <table
                   align="center"
                   role="presentation"
@@ -413,17 +395,8 @@
                   border="0"
                 >
                   <tr>
-                    <td
-                      bgcolor="#75acd2"
-                      width="2"
-                      style="
-                        background: #75acd2;
-                        font-size: 0;
-                        line-height: 0;
-                        padding: 0;
-                      "
-                    >
-                      <div style="width: 2px; height: 22px; font-size: 0; line-height: 0;">&nbsp;</div>
+                    <td class="vh-river-cell">
+                      <div class="vh-river-bar" style="height: 22px">&nbsp;</div>
                     </td>
                   </tr>
                 </table>
@@ -432,28 +405,17 @@
 
             <!-- Vibecode: from craft to art -->
             <tr>
-              <td align="center" class="vh-pad-x" style="padding: 0 32px;">
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 14px;
-                    font-weight: 400;
-                    line-height: 1.5;
-                    letter-spacing: 0.02em;
-                    color: #2e72b8;
-                    text-align: center;
-                  "
-                >
-                  Vibecode: from craft to art
-                </div>
+              <td align="center" class="vh-pad-x" style="padding: 0 32px">
+                <div class="vh-mono vh-talk">Vibecode: from craft to art</div>
               </td>
             </tr>
 
             <!-- connector -->
             <tr>
-              <td align="center" style="padding: 0; font-size: 0; line-height: 0;">
+              <td
+                align="center"
+                style="padding: 0; font-size: 0; line-height: 0"
+              >
                 <table
                   align="center"
                   role="presentation"
@@ -462,17 +424,8 @@
                   border="0"
                 >
                   <tr>
-                    <td
-                      bgcolor="#75acd2"
-                      width="2"
-                      style="
-                        background: #75acd2;
-                        font-size: 0;
-                        line-height: 0;
-                        padding: 0;
-                      "
-                    >
-                      <div style="width: 2px; height: 22px; font-size: 0; line-height: 0;">&nbsp;</div>
+                    <td class="vh-river-cell">
+                      <div class="vh-river-bar" style="height: 22px">&nbsp;</div>
                     </td>
                   </tr>
                 </table>
@@ -481,20 +434,8 @@
 
             <!-- Entreprise grade vibecoding frameworks -->
             <tr>
-              <td align="center" class="vh-pad-x" style="padding: 0 32px;">
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 14px;
-                    font-weight: 400;
-                    line-height: 1.5;
-                    letter-spacing: 0.02em;
-                    color: #2e72b8;
-                    text-align: center;
-                  "
-                >
+              <td align="center" class="vh-pad-x" style="padding: 0 32px">
+                <div class="vh-mono vh-talk">
                   Entreprise grade vibecoding frameworks
                 </div>
               </td>
@@ -502,7 +443,10 @@
 
             <!-- connector -->
             <tr>
-              <td align="center" style="padding: 0; font-size: 0; line-height: 0;">
+              <td
+                align="center"
+                style="padding: 0; font-size: 0; line-height: 0"
+              >
                 <table
                   align="center"
                   role="presentation"
@@ -511,17 +455,8 @@
                   border="0"
                 >
                   <tr>
-                    <td
-                      bgcolor="#75acd2"
-                      width="2"
-                      style="
-                        background: #75acd2;
-                        font-size: 0;
-                        line-height: 0;
-                        padding: 0;
-                      "
-                    >
-                      <div style="width: 2px; height: 22px; font-size: 0; line-height: 0;">&nbsp;</div>
+                    <td class="vh-river-cell">
+                      <div class="vh-river-bar" style="height: 22px">&nbsp;</div>
                     </td>
                   </tr>
                 </table>
@@ -530,28 +465,17 @@
 
             <!-- Vibecode reviewing -->
             <tr>
-              <td align="center" class="vh-pad-x" style="padding: 0 32px;">
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 14px;
-                    font-weight: 400;
-                    line-height: 1.5;
-                    letter-spacing: 0.02em;
-                    color: #2e72b8;
-                    text-align: center;
-                  "
-                >
-                  Vibecode reviewing
-                </div>
+              <td align="center" class="vh-pad-x" style="padding: 0 32px">
+                <div class="vh-mono vh-talk">Vibecode reviewing</div>
               </td>
             </tr>
 
             <!-- connector (section break) -->
             <tr>
-              <td align="center" style="padding: 0; font-size: 0; line-height: 0;">
+              <td
+                align="center"
+                style="padding: 0; font-size: 0; line-height: 0"
+              >
                 <table
                   align="center"
                   role="presentation"
@@ -560,17 +484,8 @@
                   border="0"
                 >
                   <tr>
-                    <td
-                      bgcolor="#75acd2"
-                      width="2"
-                      style="
-                        background: #75acd2;
-                        font-size: 0;
-                        line-height: 0;
-                        padding: 0;
-                      "
-                    >
-                      <div style="width: 2px; height: 40px; font-size: 0; line-height: 0;">&nbsp;</div>
+                    <td class="vh-river-cell">
+                      <div class="vh-river-bar" style="height: 40px">&nbsp;</div>
                     </td>
                   </tr>
                 </table>
@@ -579,29 +494,17 @@
 
             <!-- VIBEHATON WORKSHOP -->
             <tr>
-              <td align="center" class="vh-pad-x" style="padding: 0 32px;">
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 16px;
-                    font-weight: 700;
-                    line-height: 1.4;
-                    letter-spacing: 0.18em;
-                    text-transform: uppercase;
-                    color: #2e72b8;
-                    text-align: center;
-                  "
-                >
-                  Vibehaton workshop
-                </div>
+              <td align="center" class="vh-pad-x" style="padding: 0 32px">
+                <div class="vh-mono vh-heading">Vibehaton workshop</div>
               </td>
             </tr>
 
             <!-- connector (section break) -->
             <tr>
-              <td align="center" style="padding: 0; font-size: 0; line-height: 0;">
+              <td
+                align="center"
+                style="padding: 0; font-size: 0; line-height: 0"
+              >
                 <table
                   align="center"
                   role="presentation"
@@ -610,17 +513,8 @@
                   border="0"
                 >
                   <tr>
-                    <td
-                      bgcolor="#75acd2"
-                      width="2"
-                      style="
-                        background: #75acd2;
-                        font-size: 0;
-                        line-height: 0;
-                        padding: 0;
-                      "
-                    >
-                      <div style="width: 2px; height: 40px; font-size: 0; line-height: 0;">&nbsp;</div>
+                    <td class="vh-river-cell">
+                      <div class="vh-river-bar" style="height: 40px">&nbsp;</div>
                     </td>
                   </tr>
                 </table>
@@ -629,29 +523,17 @@
 
             <!-- APERO AM FLUSS -->
             <tr>
-              <td align="center" class="vh-pad-x" style="padding: 0 32px;">
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 16px;
-                    font-weight: 700;
-                    line-height: 1.4;
-                    letter-spacing: 0.18em;
-                    text-transform: uppercase;
-                    color: #2e72b8;
-                    text-align: center;
-                  "
-                >
-                  Apero am Fluss
-                </div>
+              <td align="center" class="vh-pad-x" style="padding: 0 32px">
+                <div class="vh-mono vh-heading">Apero am Fluss</div>
               </td>
             </tr>
 
             <!-- exit stub -->
             <tr>
-              <td align="center" style="padding: 0; font-size: 0; line-height: 0;">
+              <td
+                align="center"
+                style="padding: 0; font-size: 0; line-height: 0"
+              >
                 <table
                   align="center"
                   role="presentation"
@@ -660,17 +542,8 @@
                   border="0"
                 >
                   <tr>
-                    <td
-                      bgcolor="#75acd2"
-                      width="2"
-                      style="
-                        background: #75acd2;
-                        font-size: 0;
-                        line-height: 0;
-                        padding: 0;
-                      "
-                    >
-                      <div style="width: 2px; height: 36px; font-size: 0; line-height: 0;">&nbsp;</div>
+                    <td class="vh-river-cell">
+                      <div class="vh-river-bar" style="height: 36px">&nbsp;</div>
                     </td>
                   </tr>
                 </table>
@@ -679,7 +552,11 @@
 
             <!-- ── CTA ── -->
             <tr>
-              <td align="center" class="vh-pad-x" style="padding: 24px 32px 56px 32px;">
+              <td
+                align="center"
+                class="vh-pad-x"
+                style="padding: 24px 32px 56px 32px"
+              >
                 <table
                   role="presentation"
                   cellpadding="0"
@@ -687,29 +564,11 @@
                   border="0"
                 >
                   <tr>
-                    <td
-                      align="center"
-                      style="
-                        background: #2e72b8;
-                        border: 1.5px solid #2e72b8;
-                      "
-                    >
+                    <td align="center" class="vh-cta-cell">
                       <a
                         href="https://vibehuus.be/confirm.html?e={{email}}"
                         target="_blank"
-                        class="vh-mono"
-                        style="
-                          display: inline-block;
-                          padding: 14px 40px;
-                          font-family: 'Space Mono', ui-monospace, Menlo,
-                            Consolas, 'Courier New', monospace;
-                          font-size: 13px;
-                          font-weight: 700;
-                          letter-spacing: 0.18em;
-                          text-transform: uppercase;
-                          color: #ffffff;
-                          text-decoration: none;
-                        "
+                        class="vh-mono vh-cta"
                         >I'll be there</a
                       >
                     </td>
@@ -727,29 +586,16 @@
             cellpadding="0"
             cellspacing="0"
             border="0"
-            style="width: 600px; max-width: 600px;"
+            style="width: 600px; max-width: 600px"
           >
             <tr>
               <td
                 align="center"
                 class="vh-pad-x"
-                style="padding: 20px 32px 40px 32px;"
+                style="padding: 20px 32px 40px 32px"
               >
-                <div
-                  class="vh-mono"
-                  style="
-                    font-family: 'Space Mono', ui-monospace, Menlo, Consolas,
-                      'Courier New', monospace;
-                    font-size: 11px;
-                    line-height: 1.6;
-                    letter-spacing: 0.1em;
-                    text-transform: uppercase;
-                    color: #8aaed0;
-                  "
-                >
-                  <a
-                    href="https://vibehuus.be"
-                    style="color: #8aaed0; text-decoration: none;"
+                <div class="vh-mono vh-footer">
+                  <a href="https://vibehuus.be" class="vh-link-dim"
                     >vibehuus.be</a
                   >
                   · Bern, Switzerland
