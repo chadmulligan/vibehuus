@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -50,13 +50,6 @@
       .vh-mono {
         font-family:
           "Space Mono", ui-monospace, Menlo, Consolas, "Courier New", monospace;
-      }
-      .vh-title-text {
-        font-family: "Bebas Neue", Impact, "Arial Narrow Bold", sans-serif;
-        font-size: 96px;
-        line-height: 0.88;
-        letter-spacing: -0.005em;
-        color: #2e72b8;
       }
 
       /* --- Element styles ---
@@ -165,9 +158,6 @@
         .vh-container {
           width: 100% !important;
         }
-        .vh-title-text {
-          font-size: 72px !important;
-        }
         .vh-pad-x {
           padding-left: 20px !important;
           padding-right: 20px !important;
@@ -176,9 +166,6 @@
     </style>
     <!--[if mso]>
       <style type="text/css">
-        .vh-title-text {
-          font-family: Impact, "Arial Narrow Bold", sans-serif !important;
-        }
         .vh-mono {
           font-family: "Courier New", Courier, monospace !important;
         }
@@ -228,14 +215,28 @@
               border: 2px solid #2e72b8;
             "
           >
-            <!-- Title -->
+            <!-- Title (image because no email client reliably loads Bebas Neue) -->
             <tr>
               <td
                 align="center"
                 class="vh-pad-x"
                 style="padding: 36px 32px 0 32px"
               >
-                <div class="vh-title-text">Vibehuus</div>
+                <img
+                  src="title.png"
+                  alt="Vibehuus"
+                  width="276"
+                  height="69"
+                  style="
+                    display: block;
+                    width: 276px;
+                    max-width: 100%;
+                    height: auto;
+                    border: 0;
+                    outline: none;
+                    -ms-interpolation-mode: bicubic;
+                  "
+                />
               </td>
             </tr>
 
