@@ -22,11 +22,12 @@ body {
   background: var(--page);
   font-family: "Space Mono", ui-monospace, monospace;
   color: var(--blue);
+  /* `100vh` on iOS Safari is taller than the actually-visible area
+     (it includes the URL-bar height), so the body can naturally exceed
+     the viewport and the page scrolls. Switching to `100dvh` here would
+     pin the body to the visible area and combined with the mobile flex
+     layout would prevent scrolling entirely. */
   min-height: 100vh;
-  /* dvh respects the actually-visible viewport on iOS Safari (`100vh`
-     there includes the URL bar height, which forces an unwanted scroll
-     until the URL bar collapses). */
-  min-height: 100dvh;
   padding: 16px;
   display: flex;
   flex-direction: column;
