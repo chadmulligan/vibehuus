@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blue: #2e72b8;
+  --blue-deep: #1f5a99;
+  --blue-dim: #8aaed0;
+  --bg: #ffffff;
+  --page: #f4f6f9;
+}
+
+body {
+  background: var(--page);
+  font-family: "Space Mono", ui-monospace, monospace;
+  color: var(--blue);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.card {
+  background: var(--bg);
+  border: 2px solid var(--blue);
+  max-width: 520px;
+  width: 100%;
+  padding: 56px 32px 48px;
+  text-align: center;
+}
+
+.title {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: clamp(64px, 10vw, 110px);
+  line-height: 0.88;
+  letter-spacing: -0.005em;
+}
+
+.subtitle {
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.status {
+  margin-top: 40px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+.stamp {
+  margin-top: 12px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--blue-dim);
+  word-break: break-all;
+}
+
+.meta {
+  margin-top: 36px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue-dim);
+}
+
+.meta a {
+  color: var(--blue-dim);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--blue-dim);
+}
