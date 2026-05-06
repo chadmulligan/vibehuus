@@ -46,19 +46,19 @@ const RIVER_POINTS_MOBILE = [
   [0.07, 0.0], //   entry
   [0.09, 0.2], //   topguide
   [0.25, 0.26], //   guide2
-  [0.525, 0.28], // ★ Haus am Fluss
-  [0.74, 0.285], //   guide3
-  [0.785, 0.33], // ★ Date + Time
-  [0.74, 0.385], //   between
+  [0.44, 0.275], // ★ Haus am Fluss
+  [0.76, 0.285], //   guide3
+  [0.84, 0.335], // ★ Date + Time
+  [0.76, 0.385], //   between
   [0.53, 0.39], //   between2
-  [0.275, 0.4], //   between3
-  [0.24, 0.49], // ★ Talks
-  [0.24, 0.53], // ★ Vibecode: from craft to art
-  [0.24, 0.57], // ★ Entreprise grade
-  [0.24, 0.6], // ★ Vibecode reviewing
-  [0.24, 0.67], // ★ Vibehaton workshop
-  [0.24, 0.74], // ★ Apero by the Aare
-  [0.24, 1.0], //   exit
+  [0.255, 0.4], //   between3
+  [0.21, 0.49], // ★ Talks
+  [0.21, 0.53], // ★ Vibecode: from craft to art
+  [0.21, 0.57], // ★ Entreprise grade
+  [0.21, 0.61], // ★ Vibecode reviewing
+  [0.21, 0.71], // ★ Vibehaton workshop
+  [0.21, 0.81], // ★ Apero by the Aare
+  [0.21, 1.0], //   exit
 ];
 
 function activeRiverPoints() {
