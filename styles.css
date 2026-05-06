@@ -56,6 +56,13 @@ canvas#scene {
   transform: translateX(-50%);
   text-align: center;
   z-index: 5;
+  /* Without an explicit width, an absolute element with `left: 50%` only
+     gets the right-half of the poster as its shrink-to-fit budget — on
+     narrow viewports that forces the subtitle to wrap mid-line. Sizing
+     to max-content lets the block span as wide as its longest line; the
+     max-width keeps it from poking past the poster edge. */
+  width: max-content;
+  max-width: calc(100% - 16px);
 }
 
 .title {
@@ -386,16 +393,54 @@ body[data-mode="edit"] .pos-chip {
 
 /* ── MOBILE ── */
 @media (max-width: 720px) {
+  /* Let the poster flex-fill the viewport instead of using a fixed
+     aspect — that way it never overflows on short viewports and never
+     leaves a strip of empty space on tall ones. The river coords in
+     RIVER_POINTS_MOBILE are normalized 0–1, so they adapt to whatever
+     aspect ratio the screen ends up handing the poster. */
+  body {
+    padding: 12px;
+    justify-content: flex-start;
+  }
   .poster {
-    aspect-ratio: 720 / 1200;
+    aspect-ratio: auto;
+    max-width: 100%;
+    flex: 1 1 0;
+    min-height: 0;
+  }
+  .signature {
+    flex-shrink: 0;
+    margin-top: 10px;
   }
   .title-block {
     top: 3%;
   }
+  .title {
+    font-size: 72px;
+  }
+  .subtitle {
+    font-size: 13px;
+  }
   .label {
     font-size: 11px;
   }
+  /* Pull the strong/big labels down to mobile size to fit the right-side
+     strip on one line. */
+  .marker[data-id="date"] .label,
+  .marker[data-id="haus"] .label,
+  .marker[data-id="talks"] .label,
+  .marker[data-id="vibehaton"] .label,
+  .marker[data-id="apero"] .label {
+    font-size: 13px;
+    letter-spacing: 0.06em;
+  }
+  /* Sign-up: bigger button text, room for the larger label. */
   .signup {
-    width: 192px;
+    width: 240px;
+  }
+  .signup input,
+  .signup button {
+    font-size: 14px;
+    padding: 12px 16px;
   }
 }

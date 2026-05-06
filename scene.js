@@ -15,9 +15,12 @@ let lastT = 0;
 // `top:%` / `left:%` of the corresponding HTML marker, so the dot sits
 // exactly on the river. Catmull-Rom interpolation passes through every
 // control point, so the curve is guaranteed to flow through the markers.
-// Only entry, exit, and one off-screen guide at the top (to keep the
-// river clear of the title block) are non-marker points.
-const RIVER_POINTS = [
+//
+// Two sets: one tuned for the wide desktop poster (1900×1200), one for
+// the portrait mobile poster (720×1200). The active set is picked by
+// `activeRiverPoints()` based on canvas width. Edit-mode drags mutate
+// whichever set is currently active.
+const RIVER_POINTS_DESKTOP = [
   [0.336, 0.0], //   entry
   [0.321, 0.187], //   topguide
   [0.375, 0.316], //   guide2
@@ -35,6 +38,32 @@ const RIVER_POINTS = [
   [0.375, 0.823], // ★ Apero by the Aare
   [0.363, 1.0], //   exit
 ];
+
+// Seeded as desktop x minus 0.15 — a starting point. Tune by switching
+// <body data-mode="edit">, dragging on a narrow viewport, and copying the
+// console snapshot back here.
+const RIVER_POINTS_MOBILE = [
+  [0.07, 0.0], //   entry
+  [0.09, 0.2], //   topguide
+  [0.25, 0.26], //   guide2
+  [0.525, 0.28], // ★ Haus am Fluss
+  [0.74, 0.285], //   guide3
+  [0.785, 0.33], // ★ Date + Time
+  [0.74, 0.385], //   between
+  [0.53, 0.39], //   between2
+  [0.275, 0.4], //   between3
+  [0.24, 0.49], // ★ Talks
+  [0.24, 0.53], // ★ Vibecode: from craft to art
+  [0.24, 0.57], // ★ Entreprise grade
+  [0.24, 0.6], // ★ Vibecode reviewing
+  [0.24, 0.67], // ★ Vibehaton workshop
+  [0.24, 0.74], // ★ Apero by the Aare
+  [0.24, 1.0], //   exit
+];
+
+function activeRiverPoints() {
+  return W < 720 ? RIVER_POINTS_MOBILE : RIVER_POINTS_DESKTOP;
+}
 
 // ────────────────────────────────────────────────────────────────────────────
 // Catmull-Rom — the curve passes through every control point so the rendered
@@ -136,6 +165,11 @@ function seededRand(seed, k) {
 }
 
 function drawCartography(g) {
+  // On narrow / portrait posters (mobile) the side strips crowd the river
+  // and add visual noise without breathing room — skip them entirely so the
+  // page reads as just title + river + stops.
+  if (W < 720) return;
+
   g.save();
 
   g.strokeStyle = "rgba(117, 172, 210, 0.34)";
@@ -279,7 +313,7 @@ class Particle {
 
 function init() {
   if (!W || !H) return;
-  const px = RIVER_POINTS.map(([x, y]) => [x * W, y * H]);
+  const px = activeRiverPoints().map(([x, y]) => [x * W, y * H]);
   riverSamples = catmullSamples(px, 70);
   buildBackground();
   // Density tied to river length so longer rivers get more sparkles.
@@ -369,7 +403,7 @@ if (!started) {
     requestAnimationFrame(() => {
       rebuildPending = false;
       if (!W || !H) return;
-      const px = RIVER_POINTS.map(([x, y]) => [x * W, y * H]);
+      const px = activeRiverPoints().map(([x, y]) => [x * W, y * H]);
       riverSamples = catmullSamples(px, 90);
       buildBackground();
     });
@@ -385,13 +419,14 @@ if (!started) {
     return out;
   }
 
-  // Position every marker from RIVER_POINTS — the single source of truth.
-  // Edit values in the array at the top of this file and reload; markers
-  // follow automatically. No need to keep HTML top/left in sync by hand.
+  // Position every marker from the active river — the source of truth for
+  // the current viewport. Edit values in the matching array and reload;
+  // markers follow automatically.
+  const points = activeRiverPoints();
   markers.forEach((m) => {
     const idx = ID_TO_RIVER_INDEX[m.dataset.id];
-    if (idx !== undefined && RIVER_POINTS[idx]) {
-      const [x, y] = RIVER_POINTS[idx];
+    if (idx !== undefined && points[idx]) {
+      const [x, y] = points[idx];
       m.style.left = `${(x * 100).toFixed(2)}%`;
       m.style.top = `${(y * 100).toFixed(2)}%`;
     }
@@ -443,7 +478,7 @@ if (!started) {
 
       const idx = ID_TO_RIVER_INDEX[m.dataset.id];
       if (idx !== undefined) {
-        RIVER_POINTS[idx] = [x / 100, y / 100];
+        activeRiverPoints()[idx] = [x / 100, y / 100];
         scheduleRebuild();
       }
       refresh();
@@ -453,10 +488,17 @@ if (!started) {
       if (!dragging) return;
       dragging = false;
       m.classList.remove("dragging");
+      const setName =
+        activeRiverPoints() === RIVER_POINTS_MOBILE
+          ? "RIVER_POINTS_MOBILE"
+          : "RIVER_POINTS_DESKTOP";
+      const arrSrc = activeRiverPoints()
+        .map(([x, y]) => `  [${x.toFixed(3)}, ${y.toFixed(3)}],`)
+        .join("\n");
       console.log(
         `[${m.dataset.id}] left: ${m.style.left}; top: ${m.style.top};`,
       );
-      console.log("snapshot:", snapshot());
+      console.log(`${setName} = [\n${arrSrc}\n];`);
     };
     dot.addEventListener("pointerup", endDrag);
     dot.addEventListener("pointercancel", endDrag);
