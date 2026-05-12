@@ -43,20 +43,20 @@ const RIVER_POINTS_DESKTOP = [
 // <body data-mode="edit">, dragging on a narrow viewport, and copying the
 // console snapshot back here.
 const RIVER_POINTS_MOBILE = [
-  [0.07, 0.0], //   entry
-  [0.09, 0.2], //   topguide
-  [0.25, 0.26], //   guide2
-  [0.44, 0.275], // ★ Haus am Fluss
-  [0.76, 0.285], //   guide3
-  [0.84, 0.335], // ★ Date + Time
-  [0.76, 0.385], //   between
-  [0.53, 0.39], //   between2
-  [0.255, 0.4], //   between3
-  [0.21, 0.49], // ★ Talks
-  [0.21, 0.53], // ★ Vibecode: from craft to art
-  [0.21, 0.57], // ★ Entreprise grade
-  [0.21, 0.61], // ★ Vibecode reviewing
-  [0.21, 0.71], // ★ Vibehaton workshop
+  [0.07, 0], //   entry
+  [0.09, 0.27], //   topguide
+  [0.25, 0.33], //   guide2
+  [0.44, 0.345], // ★ Haus am Fluss
+  [0.76, 0.355], //   guide3
+  [0.84, 0.405], // ★ Date + Time
+  [0.76, 0.455], //   between
+  [0.53, 0.46], //   between2
+  [0.255, 0.47], //   between3
+  [0.21, 0.53], // ★ Talks
+  [0.21, 0.57], // ★ Vibecode: from craft to art
+  [0.21, 0.61], // ★ Entreprise grade
+  [0.21, 0.65], // ★ Vibecode reviewing
+  [0.21, 0.73], // ★ Vibehaton workshop
   [0.21, 0.81], // ★ Apero by the Aare
   [0.21, 1.0], //   exit
 ];
