@@ -18,7 +18,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 const TEMPLATE_URL = "https://vibehuus.be/email.html";
 const SUBJECT = "Vibehuus — Friday 5th June 2026";
-const FROM_NAME = "Pawel Kowalski + Jeremy Isnard";
+const FROM_NAME = "Pawel + Jeremy";
 const FROM_EMAIL = "vibeday@vibehuus.be";
 const GUESTS_CSV = "guests.csv";
 
@@ -34,7 +34,8 @@ async function sendInvites() {
     // .env is optional — env vars from the shell still work.
   }
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) throw new Error("Missing RESEND_API_KEY (set in .env or shell).");
+  if (!apiKey)
+    throw new Error("Missing RESEND_API_KEY (set in .env or shell).");
 
   const rawHtml = await fetch(TEMPLATE_URL).then((r) => r.text());
   const html = absolutizeUrls(inlineStyles(rawHtml), TEMPLATE_URL);
@@ -77,7 +78,10 @@ async function sendInvites() {
     }
     row[1] = `sent ${new Date().toISOString()}`;
     sent.push(email);
-    writeFileSync(GUESTS_CSV, [header, ...rows].map((r) => r.join(",")).join("\n") + "\n");
+    writeFileSync(
+      GUESTS_CSV,
+      [header, ...rows].map((r) => r.join(",")).join("\n") + "\n",
+    );
   }
 
   console.log(`\nSent ${sent.length} invite${sent.length === 1 ? "" : "s"}:`);

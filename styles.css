@@ -99,13 +99,15 @@ canvas#scene {
 .subtitle,
 .label,
 .guide-tag,
+.signature,
 .pos-chip {
   paint-order: stroke fill;
 }
 .title,
 .subtitle,
 .label,
-.guide-tag {
+.guide-tag,
+.signature {
   text-shadow:
     2px 0 0 var(--bg),
     -2px 0 0 var(--bg),
@@ -377,27 +379,45 @@ body[data-mode="edit"] .pos-chip {
   opacity: 0.85;
 }
 
-/* ── SIGNATURE ── */
+/* ── SIGNATURE — cartographer's credit, upper-right of the poster.
+   Seats roughly level with the subtitle so the title-block and the
+   cartouche share a horizontal "header line". Sits over the side-strip
+   rules, so it carries a small white plate (with a hairline frame) to
+   punch through the bars cleanly — reads like a printed cartouche. ── */
 .signature {
-  margin-top: 16px;
+  position: absolute;
+  top: 5.5%;
+  right: 3.5%;
   font-family: "Space Mono", monospace;
-  font-size: clamp(10px, 0.95vw, 14px);
-  letter-spacing: 0.2em;
-  color: var(--blue-dim);
-  text-align: center;
+  font-size: clamp(11px, 0.95vw, 15px);
+  letter-spacing: 0.18em;
+  color: var(--blue);
+  text-align: right;
   white-space: nowrap;
+  z-index: 12;
+  background: var(--bg);
+  border: 1px solid var(--blue);
+  padding: 8px 12px 9px;
+}
+
+.signature-label {
+  font-size: 0.7em;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blue-dim);
+  margin-bottom: 4px;
 }
 
 .signature a {
-  color: var(--blue-dim);
+  color: var(--blue);
   text-decoration: none;
-  border-bottom: 1px dotted var(--blue-dim);
+  border-bottom: 1px solid var(--blue);
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 .signature a:hover {
-  color: var(--blue);
   border-bottom-color: var(--blue);
+  opacity: 0.65;
 }
 
 /* ── MOBILE ── */
@@ -412,12 +432,26 @@ body[data-mode="edit"] .pos-chip {
     flex: 1 1 0;
     min-height: 0;
   }
+  /* Mobile: drop the cartouche frame and re-lay the signature as a flat
+     centered credit line directly under the subtitle. Reads as part of
+     the title-block rather than a separate floating element. */
   .signature {
-    flex-shrink: 0;
-    margin-top: 10px;
+    top: calc(6% + 115px);
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    text-align: center;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+  .signature-label {
+    margin-bottom: 3px;
   }
   .title-block {
-    top: 3%;
+    top: 6%;
   }
   .title {
     font-size: 72px;
