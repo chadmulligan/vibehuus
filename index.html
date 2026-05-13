@@ -167,6 +167,20 @@
 
     <script src="scene.js?v=16"></script>
     <script>
+      // Nudge mobile browsers to collapse the URL bar on first touch.
+      // iOS Safari only retracts it on user-initiated scroll, so we
+      // piggyback on a touchstart so the scrollTo counts as a gesture.
+      if ("ontouchstart" in window) {
+        addEventListener(
+          "touchstart",
+          () => {
+            if (window.scrollY === 0) window.scrollTo(0, 1);
+          },
+          { passive: true, once: true },
+        );
+      }
+    </script>
+    <script>
       (() => {
         const form = document.querySelector(".signup");
         if (!form) return;
