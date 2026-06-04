@@ -384,20 +384,66 @@ body[data-mode="edit"] .pos-chip {
    cartouche share a horizontal "header line". Sits over the side-strip
    rules, so it carries a small white plate (with a hairline frame) to
    punch through the bars cleanly — reads like a printed cartouche. ── */
-.signature {
+.cartouche {
   position: absolute;
   top: 5.5%;
   right: 3.5%;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.signature {
   font-family: "Space Mono", monospace;
   font-size: clamp(11px, 0.95vw, 15px);
   letter-spacing: 0.18em;
   color: var(--blue);
   text-align: right;
   white-space: nowrap;
-  z-index: 12;
   background: var(--bg);
   border: 1px solid var(--blue);
   padding: 8px 12px 9px;
+}
+
+/* Agenda link — a small cartouche card sat under the hosts credit */
+.agenda-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  text-decoration: none;
+  background: var(--bg);
+  border: 1px solid var(--blue);
+  padding: 8px 12px 9px;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.agenda-card .agenda-card-label {
+  font-family: "Space Mono", monospace;
+  font-size: clamp(8px, 0.665vw, 10.5px);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blue-dim);
+  margin-bottom: 3px;
+  transition: color 0.15s ease;
+}
+.agenda-card .agenda-card-title {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-size: clamp(11px, 0.95vw, 15px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+  transition: color 0.15s ease;
+}
+.agenda-card:hover {
+  background: var(--blue);
+}
+.agenda-card:hover .agenda-card-label,
+.agenda-card:hover .agenda-card-title {
+  color: var(--bg);
 }
 
 .signature-label {
@@ -435,11 +481,15 @@ body[data-mode="edit"] .pos-chip {
   /* Mobile: drop the cartouche frame and re-lay the signature as a flat
      centered credit line directly under the subtitle. Reads as part of
      the title-block rather than a separate floating element. */
-  .signature {
+  .cartouche {
     top: calc(6% + 115px);
     left: 50%;
     right: auto;
     transform: translateX(-50%);
+    align-items: center;
+    gap: 14px;
+  }
+  .signature {
     text-align: center;
     background: none;
     border: none;
@@ -449,6 +499,33 @@ body[data-mode="edit"] .pos-chip {
   }
   .signature-label {
     margin-bottom: 3px;
+  }
+  /* Agenda link mirrors the signature: drop the frame, become a flat
+     centered credit-style link under the hosts. */
+  .agenda-card {
+    align-items: center;
+    text-align: center;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  .agenda-card .agenda-card-label {
+    font-size: 8px;
+    margin-bottom: 3px;
+  }
+  .agenda-card .agenda-card-title {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    border-bottom: 1px solid var(--blue);
+  }
+  .agenda-card:hover {
+    background: none;
+  }
+  .agenda-card:hover .agenda-card-label {
+    color: var(--blue-dim);
+  }
+  .agenda-card:hover .agenda-card-title {
+    color: var(--blue);
   }
   .title-block {
     top: 6%;
