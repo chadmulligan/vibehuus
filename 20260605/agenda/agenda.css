@@ -80,6 +80,31 @@ body {
   color: var(--blue);
 }
 
+/* ── DISCLAIMER ── */
+.disclaimer {
+  max-width: 660px;
+  margin: 0 auto clamp(28px, 5vw, 48px);
+  border-left: 3px solid var(--river);
+  padding: clamp(14px, 2vw, 18px) clamp(16px, 2.4vw, 22px);
+  background: rgba(117, 172, 210, 0.08);
+}
+.disclaimer p {
+  font-size: clamp(12px, 1.4vw, 15px);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--blue);
+}
+.disclaimer p + p {
+  margin-top: 12px;
+}
+.disclaimer .arc {
+  color: var(--blue);
+  opacity: 0.92;
+}
+.disclaimer strong {
+  font-weight: 700;
+}
+
 /* ── TIMELINE (the river spine) ── */
 .timeline {
   list-style: none;
@@ -244,6 +269,16 @@ body {
   letter-spacing: 0.01em;
   color: var(--blue);
 }
+.speaker a {
+  color: var(--blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--blue-dim);
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+.speaker a:hover {
+  border-bottom-color: var(--blue);
+  opacity: 0.7;
+}
 .speaker-topic {
   display: block;
   font-size: clamp(11px, 1.3vw, 14px);
@@ -251,6 +286,38 @@ body {
   color: var(--blue);
   opacity: 0.72;
   margin-top: 2px;
+}
+
+/* Two-fold points (e.g. ShellUI: experience + tool) */
+.points {
+  list-style: none;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.points li {
+  position: relative;
+  padding-left: 16px;
+  font-size: clamp(11px, 1.3vw, 14px);
+  line-height: 1.45;
+  color: var(--blue);
+}
+.points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border: 1.5px solid var(--river);
+  border-radius: 50%;
+}
+.point-lead {
+  font-weight: 700;
+}
+.point-body {
+  opacity: 0.72;
 }
 
 /* ── MOBILE ── */
