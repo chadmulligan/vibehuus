@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibehuus — Sharing Experiences (one page)</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --blue: #2e72b8;
+        --blue-deep: #1f5a99;
+        --blue-dim: #8aaed0;
+        --river: #75acd2;
+        --bg: #ffffff;
+        --page: #f4f6f9;
+      }
+
+      html,
+      body {
+        height: 100%;
+        background: var(--page);
+      }
+
+      body {
+        font-family: "Space Mono", ui-monospace, monospace;
+        color: var(--blue);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(8px, 1vw, 14px);
+        padding: 16px;
+      }
+
+      .sheet {
+        position: relative;
+        width: 100%;
+        max-width: min(1500px, calc((100vh - 32px) * 1900 / 1200));
+        /* Height is capped to the visible viewport — minus room for the
+           footer that now sits below the frame — so the whole thing always
+           fits on screen without scrolling. */
+        height: min(
+          calc(100vh - 80px),
+          calc((100vw - 32px) * 1200 / 1900)
+        );
+        background: var(--bg);
+        border: 2px solid var(--blue);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: clamp(18px, 2.4vw, 48px) clamp(26px, 3.4vw, 64px);
+      }
+
+      /* ── HEADER ── back-link + title on the left, framing on the right ── */
+      header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: clamp(24px, 4vw, 70px);
+        border-bottom: 2px solid var(--blue);
+        padding-bottom: clamp(10px, 1.2vw, 18px);
+        margin-bottom: clamp(12px, 1.6vw, 24px);
+      }
+
+      /* Back link — same treatment as the "← Vibehuus" link on the agenda page */
+      .backlink {
+        display: inline-block;
+        font-size: clamp(11px, 1vw, 13px);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--blue);
+        text-decoration: none;
+        margin-bottom: clamp(10px, 1.3vw, 20px);
+        transition: opacity 0.15s ease;
+      }
+      .backlink:hover {
+        opacity: 0.6;
+      }
+
+      .head-left .eyebrow {
+        font-size: clamp(10px, 0.95vw, 15px);
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--blue-dim);
+        margin-bottom: clamp(4px, 0.5vw, 9px);
+      }
+      .head-left h1 {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-weight: 400;
+        font-size: clamp(36px, 4.4vw, 80px);
+        line-height: 0.86;
+        letter-spacing: 0.002em;
+      }
+
+      /* "How this round flows" — wide top-right blue panel, mirroring the
+         numbered-list slide from the multi-page deck ── */
+      .how {
+        flex: 0 1 52ch;
+        max-width: 52ch;
+        background: var(--blue);
+        color: var(--bg);
+        padding: clamp(11px, 1.2vw, 20px) clamp(14px, 1.4vw, 24px);
+      }
+      .how .how-eyebrow {
+        font-size: clamp(9px, 0.85vw, 13px);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        opacity: 0.85;
+        margin-bottom: clamp(6px, 0.7vw, 11px);
+      }
+      .how-list {
+        list-style: none;
+      }
+      .how-list li {
+        display: flex;
+        gap: clamp(7px, 0.7vw, 13px);
+        font-size: clamp(9.5px, 0.9vw, 13.5px);
+        line-height: 1.35;
+        margin-bottom: clamp(3px, 0.4vw, 6px);
+      }
+      .how-list li:last-child {
+        margin-bottom: 0;
+      }
+      .how-list li::before {
+        content: "•";
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 700;
+        flex: none;
+      }
+
+      /* ── QUESTION GRID ── all seven visible at once ── */
+      .grid {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 1fr;
+        gap: clamp(10px, 1.1vw, 20px);
+      }
+
+      .card {
+        position: relative;
+        border: 1.5px solid var(--blue);
+        padding: clamp(11px, 1.3vw, 22px) clamp(12px, 1.3vw, 22px)
+          clamp(11px, 1.2vw, 20px);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      /* Number sits inline with the question title to save vertical space */
+      .card-head {
+        display: flex;
+        align-items: baseline;
+        gap: clamp(7px, 0.7vw, 14px);
+      }
+      .num {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-size: clamp(18px, 1.8vw, 34px);
+        line-height: 0.98;
+        color: var(--blue-dim);
+        flex: none;
+      }
+      .q {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-size: clamp(16px, 1.7vw, 32px);
+        line-height: 0.98;
+        letter-spacing: 0.004em;
+      }
+      /* Proposal badges — labels boxed under each question */
+      .chips {
+        margin-top: auto;
+        padding-top: clamp(8px, 1vw, 16px);
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(4px, 0.4vw, 7px);
+      }
+      .chips span {
+        font-size: clamp(8.5px, 0.78vw, 12.5px);
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        padding: clamp(2.5px, 0.32vw, 6px) clamp(6px, 0.55vw, 10px);
+        border: 1.25px solid var(--blue);
+        color: var(--blue);
+        background: var(--bg);
+      }
+
+      /* ── BUBBLES ── river bubbles surfacing in the bottom-left ── */
+      .drop {
+        position: absolute;
+        left: clamp(30px, 4vw, 76px);
+        bottom: -10px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--river);
+        opacity: 0;
+        animation: float 6s linear infinite;
+      }
+      .drop:nth-of-type(2) {
+        left: calc(clamp(30px, 4vw, 76px) + 14px);
+        animation-delay: -2s;
+      }
+      .drop:nth-of-type(3) {
+        left: calc(clamp(30px, 4vw, 76px) + 28px);
+        animation-delay: -4s;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+          opacity: 0;
+        }
+        20%,
+        80% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateY(-22px);
+          opacity: 0;
+        }
+      }
+
+      /* ── FOOTER ── sits below the frame, at the foot of the page ── */
+      footer {
+        width: 100%;
+        max-width: min(1500px, calc((100vh - 32px) * 1900 / 1200));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 0 4px;
+        font-size: clamp(10px, 0.95vw, 14px);
+        letter-spacing: 0.12em;
+      }
+      footer .left {
+        text-transform: uppercase;
+        color: var(--blue-dim);
+        letter-spacing: 0.18em;
+      }
+      footer .right {
+        color: var(--blue);
+      }
+
+      @media (max-width: 900px) {
+        .sheet {
+          height: auto;
+          min-height: calc(100vh - 80px);
+        }
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .how {
+          flex: none;
+          width: 100%;
+          max-width: none;
+        }
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+          grid-auto-rows: auto;
+        }
+      }
+      @media (max-width: 560px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sheet">
+      <header>
+        <div class="head-left">
+          <a class="backlink" href="../20260605/agenda/">&larr; Agenda</a>
+          <div class="eyebrow">Round 01 · Round-table</div>
+          <h1>Sharing experiences</h1>
+        </div>
+        <div class="how">
+          <div class="how-eyebrow">How this round flows</div>
+          <ol class="how-list">
+            <li>We go around the room — everyone speaks.</li>
+            <li>Answer the questions that resonate; skip the rest.</li>
+            <li>No right answers. Beginners and power-users both welcome.</li>
+            <li>Listen for echoes — where do our stories overlap?</li>
+          </ol>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-head">
+            <div class="num">01</div>
+            <div class="q">How long have you been coding with AI?</div>
+          </div>
+          <div class="chips">
+            <span>Days</span>
+            <span>Months</span>
+            <span>Years</span>
+            <span>How you started</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="num">02</div>
+            <div class="q">How close are you to "agentic" coding?</div>
+          </div>
+          <div class="chips">
+            <span>Autocomplete</span>
+            <span>Chat / pair</span>
+            <span>Agent on a leash</span>
+            <span>Off the leash</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="num">03</div>
+            <div class="q">How often do you reach for it?</div>
+          </div>
+          <div class="chips">
+            <span>All day</span>
+            <span>Set tasks</span>
+            <span>Only when stuck</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="num">04</div>
+            <div class="q">What's tripped you up?</div>
+          </div>
+          <div class="chips">
+            <span>Hallucinated APIs</span>
+            <span>Lost context</span>
+            <span>Reviewing AI code</span>
+            <span>Trust</span>
+            <span>Tooling</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="num">05</div>
+            <div class="q">Which of those have you solved?</div>
+          </div>
+          <div class="chips">
+            <span>A habit</span>
+            <span>A tool</span>
+            <span>A prompt</span>
+            <span>Still open?</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="num">06</div>
+            <div class="q">Where is your practice heading?</div>
+          </div>
+          <div class="chips">
+            <span>What's coming</span>
+            <span>What you want next</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="num">07</div>
+            <div class="q">Solo craft, or shared with your team?</div>
+          </div>
+          <div class="chips">
+            <span>Everyone freestyles</span>
+            <span>Loose conventions</span>
+            <span>Shared tooling</span>
+            <span>Figuring it out</span>
+          </div>
+        </div>
+      </div>
+
+      <span class="drop"></span>
+      <span class="drop"></span>
+      <span class="drop"></span>
+    </div>
+
+    <footer>
+      <span class="left">Vibehuus · Beyond the prototype</span>
+      <span class="right">Haus am Fluss, Bern · 5 June 2026</span>
+    </footer>
+  </body>
+</html>
