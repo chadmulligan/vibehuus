@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vibehuus — Sharing Experiences</title>
+    <title>Vibehuus — What's a PR in the Age of Agentic Engineering?</title>
     <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
     <link
       rel="stylesheet"
@@ -129,14 +129,6 @@
         margin-bottom: clamp(12px, 1.6vw, 24px);
       }
 
-      .q-number {
-        font-family: "Bebas Neue", Impact, sans-serif;
-        font-size: clamp(34px, 4vw, 64px);
-        line-height: 0.9;
-        color: var(--blue-dim);
-        margin-bottom: clamp(6px, 0.8vw, 14px);
-      }
-
       .headline {
         font-family: "Bebas Neue", Impact, sans-serif;
         font-weight: 400;
@@ -146,7 +138,7 @@
       }
 
       h1.headline {
-        font-size: clamp(64px, 9vw, 168px);
+        font-size: clamp(46px, 6.6vw, 124px);
       }
 
       .question {
@@ -162,17 +154,20 @@
         line-height: 1.6;
         letter-spacing: 0.02em;
         margin-top: clamp(16px, 2vw, 32px);
-        max-width: 56ch;
+        max-width: 58ch;
         color: var(--blue);
       }
+      .sub strong {
+        color: var(--blue-deep);
+      }
 
-      /* Prompt chips — the smaller probing follow-ups under each question */
+      /* Prompt chips — small probing follow-ups / labels */
       .prompts {
         display: flex;
         flex-wrap: wrap;
         gap: clamp(8px, 0.9vw, 14px);
         margin-top: clamp(20px, 2.6vw, 40px);
-        max-width: 60ch;
+        max-width: 62ch;
       }
       .prompts span {
         font-size: clamp(11px, 1.05vw, 16px);
@@ -184,22 +179,95 @@
         white-space: nowrap;
       }
 
+      /* File-tree "view" of an ideal spec-driven PR */
+      .tree {
+        margin-top: clamp(14px, 1.8vw, 26px);
+        border: 1.5px solid var(--blue);
+        background: var(--bg);
+        max-width: 68ch;
+      }
+      .tree-bar {
+        background: var(--blue);
+        color: var(--bg);
+        font-size: clamp(9px, 0.85vw, 13px);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: clamp(6px, 0.7vw, 10px) clamp(12px, 1.2vw, 20px);
+      }
+      .tree pre {
+        margin: 0;
+        padding: clamp(12px, 1.3vw, 22px) clamp(14px, 1.5vw, 24px);
+        font-family: "Space Mono", ui-monospace, monospace;
+        font-size: clamp(10.5px, 1vw, 15px);
+        line-height: 1.7;
+        white-space: pre;
+        overflow-x: auto;
+      }
+      .tree .a {
+        color: var(--blue-dim);
+      }
+      .tree .r {
+        color: var(--blue-deep);
+        font-weight: 700;
+      }
+
       .agenda {
         margin-top: clamp(18px, 2vw, 30px);
         list-style: none;
-        counter-reset: q;
+        max-width: 62ch;
       }
       .agenda li {
         font-size: clamp(15px, 1.5vw, 25px);
-        line-height: 1.9;
+        line-height: 1.8;
         letter-spacing: 0.01em;
-        counter-increment: q;
+        display: flex;
+        gap: 0.7em;
       }
       .agenda li::before {
-        content: counter(q, decimal-leading-zero);
-        font-weight: 700;
+        content: "→";
         color: var(--blue-dim);
-        margin-right: 0.8em;
+        flex: none;
+      }
+      .agenda .a {
+        color: var(--blue-dim);
+      }
+
+      /* ── AUDIENCE-QUESTION SLIDES ── inverted blue panel, a pause to talk ── */
+      .slide.ask {
+        background: var(--blue);
+        color: var(--bg);
+        z-index: 3;
+      }
+      .slide.ask .eyebrow {
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .slide.ask .question {
+        color: var(--bg);
+      }
+      .slide.ask .sub {
+        color: rgba(255, 255, 255, 0.92);
+      }
+      .slide.ask .prompts span {
+        border-color: rgba(255, 255, 255, 0.85);
+        color: var(--bg);
+        background: transparent;
+      }
+      .ask-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        font-size: clamp(11px, 1vw, 16px);
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.72);
+        margin-bottom: clamp(12px, 1.6vw, 24px);
+      }
+      .ask-badge::before {
+        content: "";
+        width: clamp(8px, 0.8vw, 12px);
+        height: clamp(8px, 0.8vw, 12px);
+        border-radius: 50%;
+        background: var(--bg);
       }
 
       /* ── CHROME: counter + nav + brand ── */
@@ -259,7 +327,7 @@
         height: 4px;
         background: var(--blue);
         transition: width 0.4s ease;
-        z-index: 4;
+        z-index: 5;
       }
 
       .hint {
@@ -311,145 +379,135 @@
 
       <!-- 1 · Title -->
       <section class="slide">
-        <div class="eyebrow">Round 01 · Round-table</div>
-        <h1 class="headline">Sharing<br />experiences</h1>
+        <div class="eyebrow">Round 04 · Talk</div>
+        <h1 class="headline">What's a PR<br />in the age of<br />agentic engineering?</h1>
         <p class="sub">
-          One at a time, each of us tells the story of how we work with
-          AI-assisted coding today — honestly, no polish required. The questions
-          ahead are just a current to follow.
+          If code alone isn't enough — and an agent can write a thousand lines
+          before lunch — what do we actually commit, and what are we really
+          reviewing?
         </p>
       </section>
 
-      <!-- 2 · How it works -->
+      <!-- 2 · The pain -->
       <section class="slide">
-        <div class="eyebrow">How this round flows</div>
-        <div class="headline">A few minutes each</div>
+        <div class="eyebrow">The thing we've all seen</div>
+        <div class="headline">The PR<br />nobody can review</div>
+        <p class="sub">
+          A vibecoded pull request: 2,000 lines, and no one — not even the
+          author — can say <em>what</em> it does or <em>why</em> it's built that
+          way. Agents make code cheap, so PRs sprawl. The reviewer is left
+          rubber-stamping a wall of plausible diff.
+        </p>
+      </section>
+
+      <!-- 3 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Over to you</div>
+        <div class="question">Ever hit "approve" without really following it?</div>
+        <p class="sub">
+          Be honest. A wall of AI-generated changes, a deadline, and no thread to
+          pull. What did you actually check — and what did you just trust?
+        </p>
+      </section>
+
+      <!-- 4 · The reframe -->
+      <section class="slide">
+        <div class="eyebrow">The shift</div>
+        <div class="headline">The diff is no longer<br />the valuable part</div>
+        <p class="sub">
+          When code is cheap to generate and cheap to regenerate, the diff stops
+          being the artifact worth guarding. What's scarce now is
+          <strong>intent</strong> — what we meant, why it's shaped this way, and
+          the proof it holds together. A PR has to carry <em>that</em>, not just
+          the code.
+        </p>
+      </section>
+
+      <!-- 5 · What's in the PR -->
+      <section class="slide">
+        <div class="eyebrow">The answer</div>
+        <div class="headline">So what do<br />we commit?</div>
+        <p class="sub">
+          The PR ships the <strong>requirements that justify the code</strong>:
+          the spec (what &amp; why), the plan (architecture), the task list (how it
+          was broken down) — and the code that satisfies them. Its purpose flips
+          from "read this diff" to
+          <strong>"prove the code meets a contract you can read first."</strong>
+        </p>
+      </section>
+
+      <!-- 6 · The view: ideal PR structure -->
+      <section class="slide">
+        <div class="eyebrow">The view · anatomy of the PR</div>
+        <div class="tree">
+          <div class="tree-bar">PR #128 · passwordless login</div>
+          <pre>specs/042-passwordless-login/
+├─ <span class="r">spec.md</span>          <span class="a">what &amp; why — the contract</span>
+├─ <span class="r">plan.md</span>          <span class="a">architecture &amp; approach</span>
+├─ <span class="r">tasks.md</span>         <span class="a">ordered task breakdown</span>
+└─ <span class="r">contracts/</span>
+   └─ <span class="r">auth-api.md</span>   <span class="a">interfaces the code must honour</span>
+
+src/auth/
+├─ login.ts          <span class="a">code — the artifact</span>
+└─ session.ts
+
+tests/auth/
+└─ login.test.ts     <span class="a">proves the contract holds</span></pre>
+        </div>
+        <p class="sub">
+          The requirements artifacts live <em>beside</em> the code, in the same
+          PR — there to support it, not in a wiki nobody opens.
+        </p>
+      </section>
+
+      <!-- 7 · How it's reviewed -->
+      <section class="slide">
+        <div class="eyebrow">Who reviews it, and how</div>
+        <div class="headline">Read top-down,<br />not diff-first</div>
         <ul class="agenda">
-          <li>We go around the room — everyone speaks.</li>
-          <li>Answer the questions that resonate; skip the rest.</li>
-          <li>No right answers. Beginners and power-users both welcome.</li>
-          <li>Listen for echoes — where do our stories overlap?</li>
+          <li><span><strong>spec.md</strong> — is this the right thing? <span class="a">(product / domain owner)</span></span></li>
+          <li><span><strong>plan.md</strong> — is it built the right way? <span class="a">(tech lead / architect)</span></span></li>
+          <li><span><strong>tasks.md</strong> — is it complete, nothing skipped? <span class="a">(reviewer)</span></span></li>
+          <li><span><strong>the diff</strong> — does the code match the contract? <span class="a">(reviewer + tests)</span></span></li>
         </ul>
       </section>
 
-      <!-- 3 · Q1 experience -->
-      <section class="slide">
-        <div class="q-number">01</div>
-        <div class="question">How long have you been coding with AI?</div>
-        <div class="prompts">
-          <span>Days, months, years?</span>
-          <span>How did you start?</span>
-          <span>What hooked you — or didn't?</span>
-        </div>
-      </section>
-
-      <!-- 4 · Q2 tooling -->
-      <section class="slide">
-        <div class="q-number">02</div>
-        <div class="question">What are you using?</div>
+      <!-- 8 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Over to you</div>
+        <div class="question">Would this have saved your worst review — or just slowed it down?</div>
         <p class="sub">
-          The actual kit — which model, which surface. No wrong answers; we're
-          mapping the room.
-        </p>
-        <div class="prompts">
-          <span>Claude</span>
-          <span>OpenAI Codex</span>
-          <span>Copilot / Cursor</span>
-          <span>Something else?</span>
-          <span>Desktop / web</span>
-          <span>CLI / terminal</span>
-          <span>IDE plugin</span>
-        </div>
-      </section>
-
-      <!-- 5 · Q3 agentic -->
-      <section class="slide">
-        <div class="q-number">03</div>
-        <div class="question">How close are you to "agentic" coding?</div>
-        <p class="sub">
-          From autocomplete, to chatting with a model, to handing an agent a
-          task and letting it run — where do you sit on that spectrum?
-        </p>
-        <div class="prompts">
-          <span>Autocomplete</span>
-          <span>Chat / pair</span>
-          <span>Agent on a leash</span>
-          <span>Agent off the leash</span>
-        </div>
-      </section>
-
-      <!-- 6 · Q4 frequency -->
-      <section class="slide">
-        <div class="q-number">04</div>
-        <div class="question">How often do you reach for it?</div>
-        <div class="prompts">
-          <span>Every day, all day?</span>
-          <span>For specific tasks?</span>
-          <span>Only when stuck?</span>
-        </div>
-      </section>
-
-      <!-- 7 · Q5 issues -->
-      <section class="slide">
-        <div class="q-number">05</div>
-        <div class="question">What's tripped you up?</div>
-        <p class="sub">
-          The friction, the frustrations, the moments you nearly closed the
-          laptop.
-        </p>
-        <div class="prompts">
-          <span>Hallucinated APIs</span>
-          <span>Lost context</span>
-          <span>Reviewing AI code</span>
-          <span>Trust &amp; correctness</span>
-          <span>Tooling &amp; setup</span>
-        </div>
-      </section>
-
-      <!-- 8 · Q6 solved -->
-      <section class="slide">
-        <div class="q-number">06</div>
-        <div class="question">Which of those have you solved?</div>
-        <div class="prompts">
-          <span>What actually worked?</span>
-          <span>A habit, a tool, a prompt?</span>
-          <span>What's still unsolved?</span>
-        </div>
-      </section>
-
-      <!-- 9 · Q7 improvements -->
-      <section class="slide">
-        <div class="q-number">07</div>
-        <div class="question">Where is your own practice heading?</div>
-        <p class="sub">
-          The improvements you can already feel coming — in how you work, what
-          you trust the machine with, what you want to get better at next.
+          Picture your last messy PR shipped with a spec, a plan, and a task list
+          beside the code. Genuinely better — or ceremony you'd skip?
         </p>
       </section>
 
-      <!-- 10 · Q8 team alignment -->
+      <!-- 9 · Closing -->
       <section class="slide">
-        <div class="q-number">08</div>
-        <div class="question">Solo craft, or shared with your team?</div>
+        <div class="eyebrow">Where this leaves us</div>
+        <div class="headline">The PR becomes<br />the contract</div>
         <p class="sub">
-          Is this something you each figure out alone — or does your team have
-          shared conventions, tooling, and alignment around how to use it?
+          Not a diff to rubber-stamp, but a small, reviewable case that the right
+          thing was built the right way. The code is the artifact; the spec,
+          plan, and tasks are the argument. That's what we commit now.
         </p>
-        <div class="prompts">
-          <span>Everyone freestyles</span>
-          <span>Loose conventions</span>
-          <span>Shared tooling &amp; rules</span>
-          <span>Still figuring it out</span>
-        </div>
       </section>
 
-      <!-- 11 · Closing -->
+      <!-- 10 · The day, full circle -->
       <section class="slide">
-        <div class="eyebrow">And now — let's listen</div>
-        <div class="headline">Your turn,<br />the floor is open</div>
+        <div class="eyebrow">The day, full circle</div>
+        <div class="headline">Where we<br />landed</div>
+        <ul class="agenda">
+          <li><span>We shared <strong>where we each are</strong> with AI coding.</span></li>
+          <li><span>Found the <strong>tools already in the chat</strong> and the CLI.</span></li>
+          <li><span>Saw the <strong>frameworks make intent explicit</strong> — spec before code.</span></li>
+          <li><span>And so the <strong>pull request becomes the contract</strong>.</span></li>
+        </ul>
         <p class="sub">
-          Keep these in mind as the others speak. The overlaps we find here set
-          up everything that follows today.
+          From "I prompt, it codes" this morning to "the PR is the argument that
+          the right thing was built right." Same craft, higher ground — now let's
+          put it to work in the build session.
         </p>
       </section>
 
@@ -484,15 +542,12 @@
           if (["ArrowRight", "ArrowDown", " ", "PageDown"].includes(e.key)) {
             e.preventDefault();
             show(i + 1);
-          } else if (
-            ["ArrowLeft", "ArrowUp", "PageUp"].includes(e.key)
-          ) {
+          } else if (["ArrowLeft", "ArrowUp", "PageUp"].includes(e.key)) {
             e.preventDefault();
             show(i - 1);
           } else if (e.key === "Home") show(0);
           else if (e.key === "End") show(slides.length - 1);
         });
-        // Tap right/left half of the deck to advance on touch devices
         document.querySelector(".deck").addEventListener("click", (e) => {
           if (e.target.closest(".nav") || e.target.closest("a")) return;
           const r = e.currentTarget.getBoundingClientRect();

@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibehuus — Spec-Driven Development</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --blue: #2e72b8;
+        --blue-deep: #1f5a99;
+        --blue-dim: #8aaed0;
+        --river: #75acd2;
+        --bg: #ffffff;
+        --page: #f4f6f9;
+      }
+
+      html,
+      body {
+        height: 100%;
+        background: var(--page);
+      }
+
+      body {
+        font-family: "Space Mono", ui-monospace, monospace;
+        color: var(--blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        overflow: hidden;
+      }
+
+      /* ── DECK FRAME ── mirrors the poster: white sheet, blue rule ── */
+      .deck {
+        position: relative;
+        width: 100%;
+        max-width: min(1500px, calc((100vh - 32px) * 1900 / 1200));
+        aspect-ratio: 1900 / 1200;
+        background: var(--bg);
+        border: 2px solid var(--blue);
+        overflow: hidden;
+      }
+
+      /* Flowing river accent down the left margin — ties slides to the map */
+      .river-rail {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 7%;
+        width: 2px;
+        background: var(--river);
+        opacity: 0.55;
+        z-index: 1;
+      }
+      .river-rail .drop {
+        position: absolute;
+        left: -3px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--blue);
+        animation: flow 5.5s linear infinite;
+      }
+      .river-rail .drop:nth-child(2) {
+        animation-delay: -1.8s;
+      }
+      .river-rail .drop:nth-child(3) {
+        animation-delay: -3.6s;
+      }
+      @keyframes flow {
+        from {
+          top: -3%;
+          opacity: 0;
+        }
+        12% {
+          opacity: 0.9;
+        }
+        88% {
+          opacity: 0.9;
+        }
+        to {
+          top: 103%;
+          opacity: 0;
+        }
+      }
+
+      /* ── SLIDES ── */
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(40px, 6vw, 110px) clamp(48px, 8vw, 150px)
+          clamp(40px, 6vw, 110px) clamp(80px, 13vw, 230px);
+        z-index: 2;
+      }
+      .slide.active {
+        display: flex;
+        animation: rise 0.45s ease both;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .eyebrow {
+        font-size: clamp(11px, 1vw, 16px);
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--blue-dim);
+        margin-bottom: clamp(12px, 1.6vw, 24px);
+      }
+
+      .step {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-size: clamp(34px, 4vw, 64px);
+        line-height: 0.9;
+        color: var(--blue-dim);
+        margin-bottom: clamp(6px, 0.8vw, 14px);
+      }
+
+      .headline {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-weight: 400;
+        font-size: clamp(48px, 6.4vw, 118px);
+        line-height: 0.9;
+        letter-spacing: -0.005em;
+      }
+
+      h1.headline {
+        font-size: clamp(56px, 8vw, 150px);
+      }
+
+      .question {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-size: clamp(38px, 4.8vw, 92px);
+        line-height: 0.96;
+        letter-spacing: 0.005em;
+        max-width: 20ch;
+      }
+
+      .sub {
+        font-size: clamp(14px, 1.35vw, 22px);
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        margin-top: clamp(16px, 2vw, 32px);
+        max-width: 58ch;
+        color: var(--blue);
+      }
+      .sub strong {
+        color: var(--blue-deep);
+      }
+
+      /* Prompt chips — small probing follow-ups / labels */
+      .prompts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(8px, 0.9vw, 14px);
+        margin-top: clamp(20px, 2.6vw, 40px);
+        max-width: 62ch;
+      }
+      .prompts span {
+        font-size: clamp(11px, 1.05vw, 16px);
+        letter-spacing: 0.04em;
+        padding: clamp(6px, 0.7vw, 10px) clamp(11px, 1.1vw, 18px);
+        border: 1.5px solid var(--blue);
+        color: var(--blue);
+        background: var(--bg);
+        white-space: nowrap;
+      }
+
+      /* Mono "terminal" tag for inline keywords */
+      .cmd {
+        font-weight: 700;
+        color: var(--blue-deep);
+      }
+
+      /* Repo link chip */
+      .link {
+        display: inline-block;
+        margin-top: clamp(16px, 2vw, 30px);
+        font-size: clamp(12px, 1.1vw, 17px);
+        letter-spacing: 0.03em;
+        color: var(--blue-deep);
+        text-decoration: none;
+        border-bottom: 1.5px solid var(--blue-dim);
+        padding-bottom: 2px;
+        transition: border-color 0.15s ease;
+      }
+      .link:hover {
+        border-color: var(--blue-deep);
+      }
+
+      /* File-tree "view" of an ideal spec-driven PR */
+      .tree {
+        margin-top: clamp(14px, 1.8vw, 26px);
+        border: 1.5px solid var(--blue);
+        background: var(--bg);
+        max-width: 68ch;
+      }
+      .tree-bar {
+        background: var(--blue);
+        color: var(--bg);
+        font-size: clamp(9px, 0.85vw, 13px);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: clamp(6px, 0.7vw, 10px) clamp(12px, 1.2vw, 20px);
+      }
+      .tree pre {
+        margin: 0;
+        padding: clamp(12px, 1.3vw, 22px) clamp(14px, 1.5vw, 24px);
+        font-family: "Space Mono", ui-monospace, monospace;
+        font-size: clamp(10.5px, 1vw, 15px);
+        line-height: 1.7;
+        white-space: pre;
+        overflow-x: auto;
+      }
+      .tree .a {
+        color: var(--blue-dim);
+      } /* annotation */
+      .tree .r {
+        color: var(--blue-deep);
+        font-weight: 700;
+      } /* requirement artifact */
+
+      /* Spec flow — write → plan → tasks → code, shown as a pipeline */
+      .flow {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        gap: clamp(8px, 0.9vw, 16px);
+        margin-top: clamp(22px, 2.8vw, 44px);
+      }
+      .flow .stage {
+        flex: 1 1 0;
+        min-width: clamp(110px, 12vw, 200px);
+        border: 1.5px solid var(--blue);
+        padding: clamp(12px, 1.3vw, 22px);
+        display: flex;
+        flex-direction: column;
+        gap: 0.4em;
+      }
+      .flow .stage.hi {
+        background: var(--blue);
+        color: var(--bg);
+      }
+      .flow .stage .k {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-size: clamp(22px, 2.2vw, 40px);
+        line-height: 0.95;
+      }
+      .flow .stage .d {
+        font-size: clamp(10px, 0.95vw, 14px);
+        letter-spacing: 0.02em;
+        line-height: 1.35;
+      }
+
+      .agenda {
+        margin-top: clamp(18px, 2vw, 30px);
+        list-style: none;
+        max-width: 62ch;
+      }
+      .agenda li {
+        font-size: clamp(15px, 1.5vw, 25px);
+        line-height: 1.8;
+        letter-spacing: 0.01em;
+        display: flex;
+        gap: 0.7em;
+      }
+      .agenda li::before {
+        content: "→";
+        color: var(--blue-dim);
+        flex: none;
+      }
+      .agenda .a {
+        color: var(--blue-dim);
+      }
+
+      /* ── AUDIENCE-QUESTION SLIDES ── inverted blue panel, a pause to talk ── */
+      .slide.ask {
+        background: var(--blue);
+        color: var(--bg);
+        z-index: 3;
+      }
+      .slide.ask .eyebrow {
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .slide.ask .question {
+        color: var(--bg);
+      }
+      .slide.ask .sub {
+        color: rgba(255, 255, 255, 0.92);
+      }
+      .slide.ask .prompts span {
+        border-color: rgba(255, 255, 255, 0.85);
+        color: var(--bg);
+        background: transparent;
+      }
+      .ask-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        font-size: clamp(11px, 1vw, 16px);
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.72);
+        margin-bottom: clamp(12px, 1.6vw, 24px);
+      }
+      .ask-badge::before {
+        content: "";
+        width: clamp(8px, 0.8vw, 12px);
+        height: clamp(8px, 0.8vw, 12px);
+        border-radius: 50%;
+        background: var(--bg);
+      }
+
+      /* ── CHROME: counter + nav + brand ── */
+      .brand {
+        position: absolute;
+        top: clamp(22px, 3vw, 46px);
+        right: clamp(28px, 3.5vw, 60px);
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-size: clamp(22px, 2vw, 38px);
+        letter-spacing: 0.02em;
+        color: var(--blue);
+        z-index: 4;
+      }
+
+      .counter {
+        position: absolute;
+        bottom: clamp(22px, 3vw, 46px);
+        right: clamp(28px, 3.5vw, 60px);
+        font-size: clamp(12px, 1.1vw, 17px);
+        letter-spacing: 0.14em;
+        color: var(--blue-dim);
+        z-index: 4;
+      }
+      .counter b {
+        color: var(--blue);
+        font-weight: 700;
+      }
+
+      .nav {
+        position: absolute;
+        bottom: clamp(20px, 2.8vw, 44px);
+        left: clamp(80px, 13vw, 230px);
+        display: flex;
+        gap: 10px;
+        z-index: 4;
+      }
+      .nav button {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(13px, 1.2vw, 18px);
+        width: clamp(34px, 3vw, 46px);
+        height: clamp(34px, 3vw, 46px);
+        border: 1.5px solid var(--blue);
+        background: var(--bg);
+        color: var(--blue);
+        cursor: pointer;
+        transition: background 0.15s ease, color 0.15s ease;
+      }
+      .nav button:hover {
+        background: var(--blue);
+        color: var(--bg);
+      }
+
+      .progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        background: var(--blue);
+        transition: width 0.4s ease;
+        z-index: 5;
+      }
+
+      .hint {
+        position: absolute;
+        bottom: clamp(24px, 3.1vw, 48px);
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: clamp(10px, 0.9vw, 13px);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--blue-dim);
+        z-index: 3;
+        opacity: 0.8;
+      }
+
+      @media (max-width: 720px) {
+        .deck {
+          aspect-ratio: auto;
+          height: calc(100vh - 32px);
+        }
+        .slide {
+          padding: 70px 28px 90px 54px;
+          justify-content: center;
+        }
+        .river-rail {
+          left: 26px;
+        }
+        .nav {
+          left: 54px;
+        }
+        .prompts span {
+          white-space: normal;
+        }
+        .flow {
+          flex-direction: column;
+        }
+        .hint {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck">
+      <div class="river-rail">
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+      </div>
+
+      <div class="brand">Vibehuus</div>
+
+      <!-- 1 · Title -->
+      <section class="slide">
+        <div class="eyebrow">Round 03 · Talk</div>
+        <h1 class="headline">Spec-driven<br />development</h1>
+        <p class="sub">
+          What BMAD and Spec-Kit are really about — and whether writing the spec
+          first is worth it. A look at the methodology layer above the tools.
+        </p>
+      </section>
+
+      <!-- 2 · The problem -->
+      <section class="slide">
+        <div class="eyebrow">Why this exists</div>
+        <div class="headline">Vibecoding<br />breaks at scale</div>
+        <p class="sub">
+          Prompt, generate, fix, repeat — fast and fun on a small feature. But
+          the intent lives only in the chat history. Nobody can review what you
+          <em>meant</em>, the code drifts from it, and a second agent has no idea
+          what the first one was building toward.
+        </p>
+      </section>
+
+      <!-- 3 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Over to you</div>
+        <div class="question">Where has vibecoding bitten you?</div>
+        <p class="sub">
+          The moment it went sideways on something real — lost intent, a refactor
+          that unravelled, a teammate who couldn't follow what the AI did.
+        </p>
+        <div class="prompts">
+          <span>Lost the thread</span>
+          <span>Couldn't review it</span>
+          <span>Code drifted</span>
+          <span>Never bitten — yet</span>
+        </div>
+      </section>
+
+      <!-- 4 · Why now (history) -->
+      <section class="slide">
+        <div class="eyebrow">Why now · 1 of 2</div>
+        <div class="headline">We already<br />knew how</div>
+        <p class="sub">
+          Requirements engineering, UML, BPMN — software engineering taught all
+          of it. Then we mostly dropped it. Heavy upfront modeling went stale the
+          moment the code moved, locked in decisions before we'd learned
+          anything, and cost too much to maintain. Agile won, for good reasons.
+        </p>
+      </section>
+
+      <!-- 5 · Why now (the inversion) -->
+      <section class="slide">
+        <div class="eyebrow">Why now · 2 of 2</div>
+        <div class="headline">Those reasons<br />just expired</div>
+        <p class="sub">
+          LLMs collapse the cost of <strong>producing</strong> requirements — and,
+          crucially, of <strong>regenerating</strong> them. That kills the
+          staleness objection: the spec becomes a living document, re-derived as
+          you learn, not a frozen waterfall artifact. And agents need intent made
+          explicit <em>more</em> than human teams ever did — they can't fill the
+          gaps with tacit knowledge.
+        </p>
+        <div class="prompts">
+          <span>Cheap to write</span>
+          <span>Cheap to keep true</span>
+          <span>Iterative, not waterfall</span>
+        </div>
+      </section>
+
+      <!-- 6 · The core idea -->
+      <section class="slide">
+        <div class="eyebrow">The one idea</div>
+        <div class="headline">The spec is the<br />source of truth</div>
+        <p class="sub">
+          Flip the order. You write down <em>what</em> you want before any code
+          exists, and that written spec — not the code — becomes the contract.
+          <strong>The code is just an artifact</strong>: it should be safe to
+          delete and regenerate from the spec.
+        </p>
+      </section>
+
+      <!-- 7 · Why it works (targeting) -->
+      <section class="slide">
+        <div class="eyebrow">Why it works</div>
+        <div class="headline">Shrink the<br />realm of possibles</div>
+        <p class="sub">
+          An agent doesn't retrieve your solution — it <em>samples</em> from a
+          space of plausible ones. Every unstated constraint is a degree of
+          freedom it fills from its training prior, not your intent. A spec
+          collapses that space until the model's most likely output lands on your
+          bullseye. Requirements engineering is
+          <strong>prompt engineering at project scale</strong> — persistent,
+          shared, reviewable.
+        </p>
+        <div class="prompts">
+          <span>Fewer degrees of freedom</span>
+          <span>Constrain where it can't read your mind</span>
+          <span>Leave slack where it beats you</span>
+        </div>
+      </section>
+
+      <!-- 8 · The loop -->
+      <section class="slide">
+        <div class="eyebrow">How it flows</div>
+        <div class="headline">Spec → plan → tasks → code</div>
+        <div class="flow">
+          <div class="stage hi">
+            <div class="k">Spec</div>
+            <div class="d">What you want. The contract.</div>
+          </div>
+          <div class="stage">
+            <div class="k">Plan</div>
+            <div class="d">How to build it.</div>
+          </div>
+          <div class="stage">
+            <div class="k">Tasks</div>
+            <div class="d">Broken into steps.</div>
+          </div>
+          <div class="stage">
+            <div class="k">Code</div>
+            <div class="d">The artifact. Regenerable.</div>
+          </div>
+        </div>
+        <p class="sub">
+          Only the last box is what the agent writes. The first three are where
+          the thinking — and the reviewing — happens.
+        </p>
+      </section>
+
+      <!-- 9 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Quick show of hands</div>
+        <div class="question">Do you write anything down before you prompt?</div>
+        <p class="sub">
+          A ticket, a paragraph, a rough plan — or do you just start typing and
+          see what comes back?
+        </p>
+      </section>
+
+      <!-- 10 · Spec-Kit -->
+      <section class="slide">
+        <div class="eyebrow">In the wild · one tool that does this</div>
+        <div class="headline">Spec-Kit</div>
+        <p class="sub">
+          GitHub's open-source toolkit. It gives you a structured
+          <span class="cmd">spec → plan → tasks</span> process that bolts onto the
+          agent you already use — Claude Code, Copilot, Gemini CLI. You describe
+          intent; it scaffolds the spec, the plan, and the task breakdown the
+          agent then builds against.
+        </p>
+        <a class="link" href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github.com/github/spec-kit ↗</a>
+      </section>
+
+      <!-- 11 · BMAD -->
+      <section class="slide">
+        <div class="eyebrow">In the wild · another that does this</div>
+        <div class="headline">BMAD-Method</div>
+        <p class="sub">
+          "Breakthrough Method for Agile AI-Driven Development." It goes further,
+          modelling a <strong>whole dev team</strong> as specialized agent
+          personas — analyst, PM, architect, dev — that produce and hand off the
+          spec, the architecture, and the stories between them. Same goal, more
+          of the process made explicit.
+        </p>
+        <a class="link" href="https://github.com/bmad-code-org/BMAD-METHOD" target="_blank" rel="noopener">github.com/bmad-code-org/BMAD-METHOD ↗</a>
+      </section>
+
+      <!-- 12 · The vibecoded PR problem -->
+      <section class="slide">
+        <div class="eyebrow">Where it really pays off</div>
+        <div class="headline">The PR<br />nobody can review</div>
+        <p class="sub">
+          You've seen it: a vibecoded pull request, 2,000 lines, and no one — not
+          even the author — can say <em>what</em> it does or <em>why</em> it's
+          built that way. Vibecoding tends to sprawl. With a spec, the reviewer
+          reads the <strong>intent and the architecture first</strong>; the diff
+          traces back to a contract, and the PR can be scoped to it instead of
+          ballooning.
+        </p>
+        <div class="prompts">
+          <span>Intent before diff</span>
+          <span>Architecture is stated, not guessed</span>
+          <span>Smaller, scoped PRs</span>
+        </div>
+      </section>
+
+      <!-- 13 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Over to you</div>
+        <div class="question">Ever been handed a PR you couldn't follow?</div>
+        <p class="sub">
+          A wall of AI-generated changes with no thread to pull. How did you
+          review it — or did you just trust it and hit merge?
+        </p>
+      </section>
+
+      <!-- 14 · Payoffs -->
+      <section class="slide">
+        <div class="eyebrow">What you get</div>
+        <div class="headline">Why bother</div>
+        <ul class="agenda">
+          <li><span>Intent is <strong>reviewable</strong> — people approve the spec, not just the diff.</span></li>
+          <li><span>The spec <strong>outlives the code</strong> — regenerate without losing the why.</span></li>
+          <li><span>Parallel agents stay <strong>aligned</strong> to one shared contract.</span></li>
+          <li><span>Onboarding and handoff get a document, not a chat log.</span></li>
+        </ul>
+      </section>
+
+      <!-- 15 · The honest catch -->
+      <section class="slide">
+        <div class="eyebrow">The honest take</div>
+        <div class="headline">It isn't free</div>
+        <p class="sub">
+          Writing specs is <strong>overhead</strong>. For a throwaway script or a
+          five-minute fix, the ceremony costs more than it saves — that's still
+          vibecoding territory. Spec-driven earns its keep when the work is real,
+          shared, or long-lived. Match the weight to the stakes.
+        </p>
+      </section>
+
+      <!-- 16 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Over to you</div>
+        <div class="question">When is the ceremony worth it — and when is it just drag?</div>
+        <p class="sub">
+          Where's your own line between "just build it" and "write it down
+          first"?
+        </p>
+      </section>
+
+      <!-- 17 · Closing discussion + hand-off -->
+      <section class="slide ask">
+        <div class="ask-badge">Let's compare notes</div>
+        <div class="question">Spec first, or code first — where do you land?</div>
+        <p class="sub">
+          Pick one piece of upcoming work and decide out loud: would a spec have
+          saved you, or slowed you down? And if the spec now ships
+          <em>alongside</em> the code — what even is a pull request anymore? Hold
+          that thought; we pick it up after lunch.
+        </p>
+      </section>
+
+      <div class="counter"><b id="cur">1</b> / <span id="total">17</span></div>
+      <div class="nav">
+        <button id="prev" aria-label="Previous slide">‹</button>
+        <button id="next" aria-label="Next slide">›</button>
+      </div>
+      <div class="hint">← → or space to navigate</div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <script>
+      (() => {
+        const slides = [...document.querySelectorAll(".slide")];
+        const curEl = document.getElementById("cur");
+        const totalEl = document.getElementById("total");
+        const progress = document.getElementById("progress");
+        let i = 0;
+        totalEl.textContent = slides.length;
+
+        const show = (n) => {
+          i = Math.max(0, Math.min(slides.length - 1, n));
+          slides.forEach((s, k) => s.classList.toggle("active", k === i));
+          curEl.textContent = i + 1;
+          progress.style.width = ((i + 1) / slides.length) * 100 + "%";
+        };
+
+        document.getElementById("next").onclick = () => show(i + 1);
+        document.getElementById("prev").onclick = () => show(i - 1);
+        addEventListener("keydown", (e) => {
+          if (["ArrowRight", "ArrowDown", " ", "PageDown"].includes(e.key)) {
+            e.preventDefault();
+            show(i + 1);
+          } else if (["ArrowLeft", "ArrowUp", "PageUp"].includes(e.key)) {
+            e.preventDefault();
+            show(i - 1);
+          } else if (e.key === "Home") show(0);
+          else if (e.key === "End") show(slides.length - 1);
+        });
+        document.querySelector(".deck").addEventListener("click", (e) => {
+          if (e.target.closest(".nav") || e.target.closest("a")) return;
+          const r = e.currentTarget.getBoundingClientRect();
+          show(e.clientX - r.left < r.width / 2 ? i - 1 : i + 1);
+        });
+
+        show(0);
+      })();
+    </script>
+  </body>
+</html>

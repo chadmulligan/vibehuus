@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibehuus — From Vibecoding to Agentic Engineering</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --blue: #2e72b8;
+        --blue-deep: #1f5a99;
+        --blue-dim: #8aaed0;
+        --river: #75acd2;
+        --bg: #ffffff;
+        --page: #f4f6f9;
+      }
+
+      html,
+      body {
+        height: 100%;
+        background: var(--page);
+      }
+
+      body {
+        font-family: "Space Mono", ui-monospace, monospace;
+        color: var(--blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        overflow: hidden;
+      }
+
+      /* ── DECK FRAME ── mirrors the poster: white sheet, blue rule ── */
+      .deck {
+        position: relative;
+        width: 100%;
+        max-width: min(1500px, calc((100vh - 32px) * 1900 / 1200));
+        aspect-ratio: 1900 / 1200;
+        background: var(--bg);
+        border: 2px solid var(--blue);
+        overflow: hidden;
+      }
+
+      /* Flowing river accent down the left margin — ties slides to the map */
+      .river-rail {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 7%;
+        width: 2px;
+        background: var(--river);
+        opacity: 0.55;
+        z-index: 1;
+      }
+      .river-rail .drop {
+        position: absolute;
+        left: -3px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--blue);
+        animation: flow 5.5s linear infinite;
+      }
+      .river-rail .drop:nth-child(2) {
+        animation-delay: -1.8s;
+      }
+      .river-rail .drop:nth-child(3) {
+        animation-delay: -3.6s;
+      }
+      @keyframes flow {
+        from {
+          top: -3%;
+          opacity: 0;
+        }
+        12% {
+          opacity: 0.9;
+        }
+        88% {
+          opacity: 0.9;
+        }
+        to {
+          top: 103%;
+          opacity: 0;
+        }
+      }
+
+      /* ── SLIDES ── */
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(40px, 6vw, 110px) clamp(48px, 8vw, 150px)
+          clamp(40px, 6vw, 110px) clamp(80px, 13vw, 230px);
+        z-index: 2;
+      }
+      .slide.active {
+        display: flex;
+        animation: rise 0.45s ease both;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .eyebrow {
+        font-size: clamp(11px, 1vw, 16px);
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--blue-dim);
+        margin-bottom: clamp(12px, 1.6vw, 24px);
+      }
+
+      .step {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-size: clamp(34px, 4vw, 64px);
+        line-height: 0.9;
+        color: var(--blue-dim);
+        margin-bottom: clamp(6px, 0.8vw, 14px);
+      }
+
+      .headline {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-weight: 400;
+        font-size: clamp(48px, 6.4vw, 118px);
+        line-height: 0.9;
+        letter-spacing: -0.005em;
+      }
+
+      h1.headline {
+        font-size: clamp(56px, 8vw, 150px);
+      }
+
+      .question {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-size: clamp(38px, 4.8vw, 92px);
+        line-height: 0.96;
+        letter-spacing: 0.005em;
+        max-width: 20ch;
+      }
+
+      .sub {
+        font-size: clamp(14px, 1.35vw, 22px);
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        margin-top: clamp(16px, 2vw, 32px);
+        max-width: 58ch;
+        color: var(--blue);
+      }
+      .sub strong {
+        color: var(--blue-deep);
+      }
+
+      /* Prompt chips — small probing follow-ups / labels */
+      .prompts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(8px, 0.9vw, 14px);
+        margin-top: clamp(20px, 2.6vw, 40px);
+        max-width: 62ch;
+      }
+      .prompts span {
+        font-size: clamp(11px, 1.05vw, 16px);
+        letter-spacing: 0.04em;
+        padding: clamp(6px, 0.7vw, 10px) clamp(11px, 1.1vw, 18px);
+        border: 1.5px solid var(--blue);
+        color: var(--blue);
+        background: var(--bg);
+        white-space: nowrap;
+      }
+
+      /* Mono "terminal" tag for commands shown in body copy */
+      .cmd {
+        font-weight: 700;
+        color: var(--blue-deep);
+      }
+
+      .agenda {
+        margin-top: clamp(18px, 2vw, 30px);
+        list-style: none;
+        counter-reset: q;
+        max-width: 60ch;
+      }
+      .agenda li {
+        font-size: clamp(15px, 1.5vw, 25px);
+        line-height: 1.85;
+        letter-spacing: 0.01em;
+        counter-increment: q;
+      }
+      .agenda li::before {
+        content: counter(q, decimal-leading-zero);
+        font-weight: 700;
+        color: var(--blue-dim);
+        margin-right: 0.8em;
+      }
+      .agenda.plain {
+        counter-reset: none;
+      }
+      .agenda.plain li {
+        counter-increment: none;
+      }
+      .agenda.plain li::before {
+        content: "→";
+        color: var(--blue-dim);
+        margin-right: 0.7em;
+      }
+
+      /* ── AUDIENCE-QUESTION SLIDES ── inverted blue panel, a pause to talk ── */
+      .slide.ask {
+        background: var(--blue);
+        color: var(--bg);
+        z-index: 3;
+      }
+      .slide.ask .eyebrow {
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .slide.ask .question {
+        color: var(--bg);
+      }
+      .slide.ask .sub {
+        color: rgba(255, 255, 255, 0.92);
+      }
+      .slide.ask .prompts span {
+        border-color: rgba(255, 255, 255, 0.85);
+        color: var(--bg);
+        background: transparent;
+      }
+      .ask-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        font-size: clamp(11px, 1vw, 16px);
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.72);
+        margin-bottom: clamp(12px, 1.6vw, 24px);
+      }
+      .ask-badge::before {
+        content: "";
+        width: clamp(8px, 0.8vw, 12px);
+        height: clamp(8px, 0.8vw, 12px);
+        border-radius: 50%;
+        background: var(--bg);
+      }
+
+      /* ── CHROME: counter + nav + brand ── */
+      .brand {
+        position: absolute;
+        top: clamp(22px, 3vw, 46px);
+        right: clamp(28px, 3.5vw, 60px);
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-size: clamp(22px, 2vw, 38px);
+        letter-spacing: 0.02em;
+        color: var(--blue);
+        z-index: 4;
+      }
+
+      .counter {
+        position: absolute;
+        bottom: clamp(22px, 3vw, 46px);
+        right: clamp(28px, 3.5vw, 60px);
+        font-size: clamp(12px, 1.1vw, 17px);
+        letter-spacing: 0.14em;
+        color: var(--blue-dim);
+        z-index: 4;
+      }
+      .counter b {
+        color: var(--blue);
+        font-weight: 700;
+      }
+
+      .nav {
+        position: absolute;
+        bottom: clamp(20px, 2.8vw, 44px);
+        left: clamp(80px, 13vw, 230px);
+        display: flex;
+        gap: 10px;
+        z-index: 4;
+      }
+      .nav button {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(13px, 1.2vw, 18px);
+        width: clamp(34px, 3vw, 46px);
+        height: clamp(34px, 3vw, 46px);
+        border: 1.5px solid var(--blue);
+        background: var(--bg);
+        color: var(--blue);
+        cursor: pointer;
+        transition: background 0.15s ease, color 0.15s ease;
+      }
+      .nav button:hover {
+        background: var(--blue);
+        color: var(--bg);
+      }
+
+      .progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        background: var(--blue);
+        transition: width 0.4s ease;
+        z-index: 5;
+      }
+
+      .hint {
+        position: absolute;
+        bottom: clamp(24px, 3.1vw, 48px);
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: clamp(10px, 0.9vw, 13px);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--blue-dim);
+        z-index: 3;
+        opacity: 0.8;
+      }
+
+      @media (max-width: 720px) {
+        .deck {
+          aspect-ratio: auto;
+          height: calc(100vh - 32px);
+        }
+        .slide {
+          padding: 70px 28px 90px 54px;
+          justify-content: center;
+        }
+        .river-rail {
+          left: 26px;
+        }
+        .nav {
+          left: 54px;
+        }
+        .prompts span {
+          white-space: normal;
+        }
+        .hint {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck">
+      <div class="river-rail">
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+      </div>
+
+      <div class="brand">Vibehuus</div>
+
+      <!-- 1 · Title -->
+      <section class="slide">
+        <div class="eyebrow">Round 02 · Talk</div>
+        <h1 class="headline">From vibecoding<br />to agentic<br />engineering</h1>
+        <p class="sub">
+          Pushing vibecoding further with what's already in reach. Tools and
+          approaches for the first steps — most of them already sitting in your
+          chat, unused.
+        </p>
+      </section>
+
+      <!-- 2 · The premise -->
+      <section class="slide">
+        <div class="eyebrow">The premise</div>
+        <div class="question">You're vibecoding. What's the next move?</div>
+        <p class="sub">
+          Most of us prompt, read the output, fix it, prompt again. That's
+          vibecoding — and it works. But the jump to <strong>agentic
+          engineering</strong> isn't a new app you install. The tools for it
+          already ship in the chat. Most go untouched.
+        </p>
+      </section>
+
+      <!-- 3 · AUDIENCE opener -->
+      <section class="slide ask">
+        <div class="ask-badge">Over to you — quick poll</div>
+        <div class="question">How are you working with AI today?</div>
+        <p class="sub">
+          Be honest — no wrong answer. Where do you sit right now, on most days?
+        </p>
+        <div class="prompts">
+          <span>Autocomplete</span>
+          <span>Chat &amp; paste</span>
+          <span>Agent on a leash</span>
+          <span>Agent off the leash</span>
+        </div>
+      </section>
+
+      <!-- 4 · The reframe -->
+      <section class="slide">
+        <div class="eyebrow">The reframe</div>
+        <div class="headline">It's already<br />in the chat</div>
+        <p class="sub">
+          You don't need a framework or a new subscription to start engineering
+          with agents. Structure, memory, guardrails, delegation — they're all
+          sitting behind the slash key, unused. Let's walk up the ladder, one
+          step at a time.
+        </p>
+      </section>
+
+      <!-- 5 · Ladder intro -->
+      <section class="slide">
+        <div class="eyebrow">The spine of this talk</div>
+        <div class="headline">Vibecoding → agentic, one step at a time</div>
+        <ul class="agenda plain">
+          <li>Slash commands — the ignored discovery surface.</li>
+          <li>Plan mode — agree the plan before any code.</li>
+          <li>CLAUDE.md — give the agent a memory.</li>
+          <li>Skills &amp; subagents — delegate and compose.</li>
+          <li>Hooks — deterministic guardrails.</li>
+          <li>MCP &amp; plugins — scale it to a team.</li>
+        </ul>
+      </section>
+
+      <!-- 6 · Step 1 slash commands -->
+      <section class="slide">
+        <div class="step">Step 01</div>
+        <div class="headline">It starts at the slash</div>
+        <p class="sub">
+          Most people never type <span class="cmd">/</span>. It's a whole
+          discovery surface — 60+ built in.
+          <span class="cmd">/init</span> writes your project memory,
+          <span class="cmd">/review</span> and
+          <span class="cmd">/security-review</span> audit your diff,
+          <span class="cmd">/insights</span> shows you how you prompt,
+          <span class="cmd">/agents</span>, <span class="cmd">/mcp</span>,
+          <span class="cmd">/plugin</span> open the rest.
+        </p>
+        <div class="prompts">
+          <span>/init</span>
+          <span>/insights</span>
+          <span>/review</span>
+          <span>/security-review</span>
+          <span>/agents</span>
+          <span>/mcp</span>
+          <span>/plugin</span>
+        </div>
+      </section>
+
+      <!-- 7 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Quick show of hands</div>
+        <div class="question">Who's ever just typed "/" to see what's there?</div>
+        <p class="sub">
+          And — what's the most useful command you've found that the rest of us
+          might not know about?
+        </p>
+      </section>
+
+      <!-- 8 · /insights spotlight -->
+      <section class="slide">
+        <div class="step">Start here</div>
+        <div class="headline">Hold up a mirror: /insights</div>
+        <p class="sub">
+          The easiest first win isn't a fancier prompt — it's seeing how you
+          already prompt. <span class="cmd">/insights</span> reads your last 30
+          days of local sessions and writes a report on your style: where Claude
+          misreads you, where you over- or under-specify. It hands back
+          <strong>copy-paste rules for your CLAUDE.md</strong> tuned to your own
+          friction. Nothing leaves your machine.
+        </p>
+        <div class="prompts">
+          <span>Analyses your own history</span>
+          <span>Local only — no upload</span>
+          <span>Actionable, not just charts</span>
+        </div>
+      </section>
+
+      <!-- 9 · Step 2 plan mode -->
+      <section class="slide">
+        <div class="step">Step 02</div>
+        <div class="headline">Agree the plan first</div>
+        <p class="sub">
+          <span class="cmd">/plan</span> (or Shift+Tab) makes the agent
+          <strong>propose a plan and wait</strong> before it touches anything.
+          Add <em>"think"</em> / <em>"think hard"</em> /
+          <em>"ultrathink"</em> to buy more reasoning. This is the cleanest
+          vibe-to-engineering moment: same prompt, but you approve before code
+          is written.
+        </p>
+        <div class="prompts">
+          <span>Propose</span>
+          <span>Review</span>
+          <span>Approve</span>
+          <span>Then build</span>
+        </div>
+      </section>
+
+      <!-- 10 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Over to you</div>
+        <div class="question">Has plan mode changed how much you trust the output?</div>
+        <p class="sub">
+          Or do you still let it run and clean up after? Where's the line for
+          you between speed and control?
+        </p>
+      </section>
+
+      <!-- 11 · Step 3 CLAUDE.md -->
+      <section class="slide">
+        <div class="step">Step 03</div>
+        <div class="headline">Give the agent a memory</div>
+        <p class="sub">
+          <span class="cmd">CLAUDE.md</span> is the agent's persistent
+          context — conventions, architecture, "always run the linter." It's
+          what turns a stateless chat into something that knows
+          <em>your</em> project. <span class="cmd">/init</span> generates a
+          first draft. Highest-leverage, zero-setup first step.
+        </p>
+        <div class="prompts">
+          <span>Conventions</span>
+          <span>Architecture notes</span>
+          <span>Do's &amp; don'ts</span>
+          <span>Our Vibehuus repo has one</span>
+        </div>
+      </section>
+
+      <!-- 12 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Quick show of hands</div>
+        <div class="question">Who has a CLAUDE.md or rules file in their repo right now?</div>
+        <p class="sub">
+          What's in it — and has it actually changed the quality of what comes
+          back?
+        </p>
+      </section>
+
+      <!-- 13 · Step 4 skills & subagents -->
+      <section class="slide">
+        <div class="step">Step 04</div>
+        <div class="headline">Delegate &amp; compose</div>
+        <p class="sub">
+          <strong>Skills</strong> package invocable instructions that load only
+          when needed (a markdown file in <span class="cmd">.claude/commands/</span>
+          becomes a slash command). <strong>Subagents</strong> are specialized
+          Claude instances with their own context window and scoped tools — run
+          a few in parallel and keep their noisy output out of your main thread.
+        </p>
+        <div class="prompts">
+          <span>Skills = reusable moves</span>
+          <span>Subagents = a small team</span>
+          <span>/agents to manage them</span>
+        </div>
+      </section>
+
+      <!-- 14 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Over to you</div>
+        <div class="question">Anyone running subagents or parallel agents?</div>
+        <p class="sub">
+          What do you delegate — reviews, research, tests? And does it actually
+          save time, or just move the cleanup around?
+        </p>
+      </section>
+
+      <!-- 15 · Step 5 hooks -->
+      <section class="slide">
+        <div class="step">Step 05</div>
+        <div class="headline">Guardrails that can't hallucinate</div>
+        <p class="sub">
+          <strong>Hooks</strong> are deterministic scripts that fire on events
+          (e.g. <span class="cmd">PreToolUse</span>). Real code, not prompts —
+          so they can <em>veto</em> a dangerous bash command or scan a write for
+          secrets, every time. This is the step that makes it real engineering.
+        </p>
+        <div class="prompts">
+          <span>Block dangerous commands</span>
+          <span>Scan for secrets</span>
+          <span>Enforce, don't suggest</span>
+        </div>
+      </section>
+
+      <!-- 16 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Over to you</div>
+        <div class="question">Has an agent ever done something that scared you?</div>
+        <p class="sub">
+          Deleted the wrong thing, force-pushed, leaked a key? What guardrail do
+          you wish you'd had — or have since added?
+        </p>
+      </section>
+
+      <!-- 17 · Step 6 MCP & plugins -->
+      <section class="slide">
+        <div class="step">Step 06</div>
+        <div class="headline">Scale it to a team</div>
+        <p class="sub">
+          <strong>MCP</strong> connects the agent to your tools and data.
+          <strong>Plugins</strong> bundle skills, subagents, commands, hooks and
+          MCP servers into one installable unit your whole team shares — so the
+          standards travel, not just live in one person's setup.
+        </p>
+        <div class="prompts">
+          <span>MCP = tools &amp; data</span>
+          <span>Plugins = shared, versioned setup</span>
+        </div>
+      </section>
+
+      <!-- 18 · What agentic engineering means -->
+      <section class="slide">
+        <div class="eyebrow">So what is "agentic engineering"?</div>
+        <div class="headline">Two shifts, not a pile of features</div>
+        <ul class="agenda plain">
+          <li>
+            <strong>Doing → supervising.</strong> You give an objective plus
+            constraints; the agent runs the loop, you review.
+          </li>
+          <li>
+            <strong>Interactive → autonomous.</strong> Run it headless
+            (<span class="cmd">claude -p … --max-turns N</span>) and wire it into
+            GitHub Actions — it wakes on a PR, reviews, fixes, commits.
+          </li>
+        </ul>
+      </section>
+
+      <!-- 19 · Definition -->
+      <section class="slide">
+        <div class="eyebrow">A working definition</div>
+        <div class="question">
+          Designing repeatable processes where agents run multi-step work inside
+          constraints you set.
+        </div>
+        <p class="sub">
+          Interactively when you're supervising. Autonomously when you're not.
+        </p>
+      </section>
+
+      <!-- 20 · AUDIENCE -->
+      <section class="slide ask">
+        <div class="ask-badge">Over to you</div>
+        <div class="question">Would you let an agent commit to your repo unattended?</div>
+        <p class="sub">
+          On a PR, in CI, at 3am? What would have to be true first for you to
+          take your hands off the wheel?
+        </p>
+      </section>
+
+      <!-- 21 · First steps -->
+      <section class="slide">
+        <div class="eyebrow">The on-ramp — don't start at 3am</div>
+        <div class="headline">First steps</div>
+        <ul class="agenda">
+          <li>
+            <strong>Interactive + structured</strong> — plan mode + CLAUDE.md +
+            /review. Zero infra, everyone today.
+          </li>
+          <li>
+            <strong>Orchestrated</strong> — subagents + skills. Delegate and
+            compose.
+          </li>
+          <li>
+            <strong>Autonomous</strong> — headless in CI / GHA, once the
+            guardrails are in place.
+          </li>
+        </ul>
+        <p class="sub">
+          The punchline: the autonomous step is only safe <em>because</em> of
+          the guardrails from the earlier ones. They're the precondition, not
+          the polish.
+        </p>
+      </section>
+
+      <!-- 22 · Closing discussion -->
+      <section class="slide ask">
+        <div class="ask-badge">Let's compare notes</div>
+        <div class="question">Where are you on the ladder — and what's your next step?</div>
+        <p class="sub">
+          Pick one thing from today you'd actually try this week. Say it out
+          loud — someone here has probably already hit the wall you're about to.
+        </p>
+      </section>
+
+      <div class="counter"><b id="cur">1</b> / <span id="total">22</span></div>
+      <div class="nav">
+        <button id="prev" aria-label="Previous slide">‹</button>
+        <button id="next" aria-label="Next slide">›</button>
+      </div>
+      <div class="hint">← → or space to navigate</div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <script>
+      (() => {
+        const slides = [...document.querySelectorAll(".slide")];
+        const curEl = document.getElementById("cur");
+        const totalEl = document.getElementById("total");
+        const progress = document.getElementById("progress");
+        let i = 0;
+        totalEl.textContent = slides.length;
+
+        const show = (n) => {
+          i = Math.max(0, Math.min(slides.length - 1, n));
+          slides.forEach((s, k) => s.classList.toggle("active", k === i));
+          curEl.textContent = i + 1;
+          progress.style.width = ((i + 1) / slides.length) * 100 + "%";
+        };
+
+        document.getElementById("next").onclick = () => show(i + 1);
+        document.getElementById("prev").onclick = () => show(i - 1);
+        addEventListener("keydown", (e) => {
+          if (["ArrowRight", "ArrowDown", " ", "PageDown"].includes(e.key)) {
+            e.preventDefault();
+            show(i + 1);
+          } else if (["ArrowLeft", "ArrowUp", "PageUp"].includes(e.key)) {
+            e.preventDefault();
+            show(i - 1);
+          } else if (e.key === "Home") show(0);
+          else if (e.key === "End") show(slides.length - 1);
+        });
+        // Tap right/left half of the deck to advance on touch devices
+        document.querySelector(".deck").addEventListener("click", (e) => {
+          if (e.target.closest(".nav") || e.target.closest("a")) return;
+          const r = e.currentTarget.getBoundingClientRect();
+          show(e.clientX - r.left < r.width / 2 ? i - 1 : i + 1);
+        });
+
+        show(0);
+      })();
+    </script>
+  </body>
+</html>
