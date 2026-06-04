@@ -3,153 +3,452 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="color-scheme" content="light only" />
+    <meta name="supported-color-schemes" content="light" />
     <title>Vibehuus — Agenda · 5 June 2026</title>
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
-    <link rel="stylesheet" href="agenda.css?v=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!--
+      This page is the SOURCE for the agenda email (fetched + inlined by
+      send-agenda.js). It is built email-bulletproof: table layout, inline
+      styles, real elements (no CSS grid, no ::before, no external CSS).
+
+      The river spine is a `border-left` on every content cell — a border
+      always spans the full cell height, and contiguous rows make one
+      unbroken line no matter how tall a row's content is (no fragile
+      height:100% tricks). Each dot straddles that border via a negative
+      margin; clients that ignore negative margins (e.g. Outlook desktop)
+      still get the continuous line, just with the dot a hair inboard.
+
+      The <style> block below is progressive enhancement ONLY — web font,
+      link hover, and the mobile breakpoint. Strip it and the inline styles
+      still render the full design.
+    -->
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f4f6f9;
+      }
+      img {
+        border: 0;
+        outline: none;
+        text-decoration: none;
+      }
+      a:hover {
+        opacity: 0.75;
+      }
+      @media only screen and (max-width: 620px) {
+        .poster {
+          width: 100% !important;
+        }
+        .pad-x {
+          padding-left: 18px !important;
+          padding-right: 18px !important;
+        }
+        .title-img {
+          font-size: 64px !important;
+        }
+      }
+    </style>
   </head>
-  <body>
-    <div class="poster">
-      <header class="agenda-head">
-        <a class="home-link" href="../../">← Vibehuus</a>
-        <div class="title">Agenda</div>
-        <div class="subtitle">
-          Friday 5 June 2026 · Haus am Fluss, Bern
-        </div>
-      </header>
+  <body style="margin: 0; padding: 0; background: #f4f6f9; color: #2e72b8">
+    <table
+      role="presentation"
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      border="0"
+      style="background: #f4f6f9"
+    >
+      <tr>
+        <td align="center" style="padding: 16px">
+          <!-- POSTER -->
+          <table
+            role="presentation"
+            class="poster"
+            width="900"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            style="
+              width: 900px;
+              max-width: 900px;
+              background: #ffffff;
+              border: 2px solid #2e72b8;
+            "
+          >
+            <!-- Home link -->
+            <tr>
+              <td
+                class="pad-x"
+                style="
+                  padding: 26px 40px 0 40px;
+                  font-family: 'Space Mono', ui-monospace, monospace;
+                "
+              >
+                <a
+                  href="../../"
+                  style="
+                    font-size: 12px;
+                    letter-spacing: 0.14em;
+                    text-transform: uppercase;
+                    color: #2e72b8;
+                    text-decoration: none;
+                  "
+                  >&larr; Vibehuus</a
+                >
+              </td>
+            </tr>
 
-      <section class="disclaimer">
-        <p>
-          A small focus group, not a conference. We're here to share our
-          experiences and questions about where AI coding is today — and where
-          it's heading. The agenda below is the thread we'll pull on, not a
-          script: come with your own talking points and projects, and we'll
-          weave them in.
-        </p>
-        <p class="arc">
-          The day builds in steps — from <strong>our shared experience</strong>,
-          to the <strong>tools already in our chats and CLIs</strong>, to
-          <strong>skill frameworks and true agentic workflows</strong>, and
-          finally to <strong>rethinking what a PR even is</strong>.
-        </p>
-      </section>
+            <!-- Title -->
+            <tr>
+              <td align="center" class="pad-x" style="padding: 6px 40px 0 40px">
+                <div
+                  class="title-img"
+                  style="
+                    font-family: 'Bebas Neue', Impact, sans-serif;
+                    font-size: 88px;
+                    line-height: 0.9;
+                    letter-spacing: 0.01em;
+                    color: #2e72b8;
+                  "
+                >
+                  Agenda
+                </div>
+              </td>
+            </tr>
 
-      <ol class="timeline">
-        <!-- 9:00–9:15 -->
-        <li class="stop break">
-          <div class="dot"></div>
-          <div class="when">09:00<span class="sep">–</span>09:15</div>
-          <div class="what">
-            <div class="title-line">Coffee</div>
-          </div>
-        </li>
+            <!-- Subtitle -->
+            <tr>
+              <td align="center" class="pad-x" style="padding: 12px 40px 0 40px">
+                <div
+                  style="
+                    font-family: 'Space Mono', ui-monospace, monospace;
+                    font-size: 14px;
+                    letter-spacing: 0.2em;
+                    text-transform: uppercase;
+                    color: #2e72b8;
+                    line-height: 1.5;
+                  "
+                >
+                  Friday 5 June 2026 &middot; Haus am Fluss, Bern
+                </div>
+              </td>
+            </tr>
 
-        <!-- 9:15–9:30 -->
-        <li class="stop">
-          <div class="dot"></div>
-          <div class="when">09:15<span class="sep">–</span>09:30</div>
-          <div class="what">
-            <div class="title-line">Round table — where's everyone at?</div>
-            <div class="subline">
-              What's working, what's not, and what's missing. We note the open
-              questions and carry them through the day.
-            </div>
-          </div>
-        </li>
+            <!-- Disclaimer -->
+            <tr>
+              <td class="pad-x" style="padding: 36px 40px 8px 40px">
+                <table
+                  role="presentation"
+                  align="center"
+                  width="680"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="width: 680px; max-width: 100%"
+                >
+                  <tr>
+                    <td
+                      style="
+                        background: #eef4fa;
+                        border-left: 3px solid #75acd2;
+                        padding: 16px 22px;
+                        font-family: 'Space Mono', ui-monospace, monospace;
+                      "
+                    >
+                      <div
+                        style="
+                          font-size: 14px;
+                          line-height: 1.6;
+                          letter-spacing: 0.01em;
+                          color: #2e72b8;
+                        "
+                      >
+                        A small focus group, not a conference. We&rsquo;re here
+                        to share our experiences and questions about where AI
+                        coding is today &mdash; and where it&rsquo;s heading. The
+                        agenda below is the thread we&rsquo;ll pull on, not a
+                        script: come with your own talking points and projects,
+                        and we&rsquo;ll weave them in.
+                      </div>
+                      <div
+                        style="
+                          font-size: 14px;
+                          line-height: 1.6;
+                          letter-spacing: 0.01em;
+                          color: #2e72b8;
+                          margin-top: 12px;
+                        "
+                      >
+                        The day builds in steps &mdash; from
+                        <strong>our shared experience</strong>, to the
+                        <strong>tools already in our chats and CLIs</strong>, to
+                        <strong>skill frameworks and true agentic workflows</strong>,
+                        and finally to
+                        <strong>rethinking what a PR even is</strong>.
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
 
-        <!-- 9:30–10:30 -->
-        <li class="stop">
-          <div class="dot"></div>
-          <div class="when">09:30<span class="sep">–</span>10:30</div>
-          <div class="what">
-            <div class="title-line">From vibecoding to agentic engineering</div>
-            <div class="subline">
-              Pushing vibecoding further with what's already in reach.
-            </div>
-            <ul class="speakers">
-              <li>
-                <span class="speaker"><a href="https://www.linkedin.com/in/paweloque/" target="_blank" rel="noopener">Pawel Kowalski</a></span>
-                <span class="speaker-topic">A use case from the Hafcoin project</span>
-              </li>
-              <li>
-                <span class="speaker"><a href="https://www.linkedin.com/in/isnardjeremy/" target="_blank" rel="noopener">Jeremy Isnard</a></span>
-                <span class="speaker-topic">Tools and approaches for the first steps</span>
-              </li>
-            </ul>
-          </div>
-        </li>
+            <!-- ── TIMELINE ── -->
+            <tr>
+              <td class="pad-x" style="padding: 30px 40px 48px 40px">
+                <table
+                  role="presentation"
+                  align="center"
+                  width="680"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="
+                    width: 680px;
+                    max-width: 100%;
+                    font-family: 'Space Mono', ui-monospace, monospace;
+                  "
+                >
+                  <!-- 09:00–09:15 Coffee (break) -->
+                  <tr>
+                    <td width="96" valign="top" align="right" style="width: 96px; padding: 1px 18px 0 0">
+                      <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; color: #8aaed0">09:00<br /><span style="color: #8aaed0">&ndash;</span><br />09:15</div>
+                    </td>
+                    <td valign="top" style="border-left: 3px solid #75acd2; padding: 0 0 26px 0">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td width="1" valign="top" style="width: 1px; padding: 0; font-size: 0; line-height: 0">
+                            <div style="width: 13px; height: 13px; background: #ffffff; border: 2px dashed #8aaed0; border-radius: 50%; margin: 2px 0 0 -9px; font-size: 0; line-height: 0">&nbsp;</div>
+                          </td>
+                          <td valign="top" style="padding: 0 0 0 22px">
+                            <div style="font-size: 13px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.18em; line-height: 1.4; color: #8aaed0">Coffee</div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
 
-        <!-- 10:45–11:45 -->
-        <li class="stop">
-          <div class="dot"></div>
-          <div class="when">10:45<span class="sep">–</span>11:45</div>
-          <div class="what">
-            <div class="title-line">Agentic frameworks (BMAD, Spec-Kit)</div>
-            <div class="subline">What are they actually trying to do?</div>
-          </div>
-        </li>
+                  <!-- 09:15–09:30 Round table -->
+                  <tr>
+                    <td width="96" valign="top" align="right" style="width: 96px; padding: 1px 18px 0 0">
+                      <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; color: #2e72b8">09:15<br /><span style="color: #8aaed0">&ndash;</span><br />09:30</div>
+                    </td>
+                    <td valign="top" style="border-left: 3px solid #75acd2; padding: 0 0 26px 0">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td width="1" valign="top" style="width: 1px; padding: 0; font-size: 0; line-height: 0">
+                            <div style="width: 16px; height: 16px; background: #ffffff; border: 3px solid #2e72b8; border-radius: 50%; margin: 1px 0 0 -11px; font-size: 0; line-height: 0">&nbsp;</div>
+                          </td>
+                          <td valign="top" style="padding: 0 0 0 20px">
+                            <div style="font-size: 18px; font-weight: 700; letter-spacing: 0.01em; line-height: 1.35; color: #2e72b8">Round table &mdash; where&rsquo;s everyone at?</div>
+                            <div style="font-size: 14px; line-height: 1.45; color: #5f93c0; margin-top: 4px">What&rsquo;s working, what&rsquo;s not, and what&rsquo;s missing. We note the open questions and carry them through the day.</div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
 
-        <!-- 11:45–12:15 -->
-        <li class="stop">
-          <div class="dot"></div>
-          <div class="when">11:45<span class="sep">–</span>12:15</div>
-          <div class="what">
-            <div class="title-line">ShellUI: building websites from the ground up</div>
-            <ul class="speakers">
-              <li>
-                <span class="speaker"><a href="https://www.linkedin.com/in/sebbarbier/" target="_blank" rel="noopener">Sebastien Barbier</a></span>
-              </li>
-            </ul>
-            <ul class="points">
-              <li>
-                <span class="point-lead">Experience feedback</span>
-                <span class="point-body">— building the framework with AI.</span>
-              </li>
-              <li>
-                <span class="point-lead">Tool proposal</span>
-                <span class="point-body">— controlled, agentic website building.</span>
-              </li>
-            </ul>
-          </div>
-        </li>
+                  <!-- 09:30–10:30 From vibecoding to agentic engineering -->
+                  <tr>
+                    <td width="96" valign="top" align="right" style="width: 96px; padding: 1px 18px 0 0">
+                      <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; color: #2e72b8">09:30<br /><span style="color: #8aaed0">&ndash;</span><br />10:30</div>
+                    </td>
+                    <td valign="top" style="border-left: 3px solid #75acd2; padding: 0 0 26px 0">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td width="1" valign="top" style="width: 1px; padding: 0; font-size: 0; line-height: 0">
+                            <div style="width: 16px; height: 16px; background: #ffffff; border: 3px solid #2e72b8; border-radius: 50%; margin: 1px 0 0 -11px; font-size: 0; line-height: 0">&nbsp;</div>
+                          </td>
+                          <td valign="top" style="padding: 0 0 0 20px">
+                            <div style="font-size: 18px; font-weight: 700; letter-spacing: 0.01em; line-height: 1.35; color: #2e72b8">From vibecoding to agentic engineering</div>
+                            <div style="font-size: 14px; line-height: 1.45; color: #5f93c0; margin-top: 4px">Pushing vibecoding further with what&rsquo;s already in reach.</div>
+                            <!-- speakers -->
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top: 12px">
+                              <tr>
+                                <td width="16" valign="top" style="width: 16px; padding: 0">
+                                  <div style="width: 6px; height: 6px; background: #75acd2; border-radius: 50%; margin-top: 8px; font-size: 0; line-height: 0">&nbsp;</div>
+                                </td>
+                                <td valign="top" style="padding: 0 0 10px 0">
+                                  <div style="font-size: 14px; font-weight: 700; line-height: 1.45; color: #2e72b8"><a href="https://www.linkedin.com/in/paweloque/" target="_blank" style="color: #2e72b8; text-decoration: none; border-bottom: 1px solid #8aaed0">Pawel Kowalski</a></div>
+                                  <div style="font-size: 13px; line-height: 1.45; color: #6f9cc4; margin-top: 2px">A use case from the Hafcoin project</div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td width="16" valign="top" style="width: 16px; padding: 0">
+                                  <div style="width: 6px; height: 6px; background: #75acd2; border-radius: 50%; margin-top: 8px; font-size: 0; line-height: 0">&nbsp;</div>
+                                </td>
+                                <td valign="top" style="padding: 0">
+                                  <div style="font-size: 14px; font-weight: 700; line-height: 1.45; color: #2e72b8"><a href="https://www.linkedin.com/in/isnardjeremy/" target="_blank" style="color: #2e72b8; text-decoration: none; border-bottom: 1px solid #8aaed0">Jeremy Isnard</a></div>
+                                  <div style="font-size: 13px; line-height: 1.45; color: #6f9cc4; margin-top: 2px">Tools and approaches for the first steps</div>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
 
-        <!-- 12:15–13:15 lunch gap -->
-        <li class="stop break">
-          <div class="dot"></div>
-          <div class="when">12:15<span class="sep">–</span>13:15</div>
-          <div class="what">
-            <div class="title-line">Lunch</div>
-          </div>
-        </li>
+                  <!-- 10:45–11:45 Agentic frameworks -->
+                  <tr>
+                    <td width="96" valign="top" align="right" style="width: 96px; padding: 1px 18px 0 0">
+                      <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; color: #2e72b8">10:45<br /><span style="color: #8aaed0">&ndash;</span><br />11:45</div>
+                    </td>
+                    <td valign="top" style="border-left: 3px solid #75acd2; padding: 0 0 26px 0">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td width="1" valign="top" style="width: 1px; padding: 0; font-size: 0; line-height: 0">
+                            <div style="width: 16px; height: 16px; background: #ffffff; border: 3px solid #2e72b8; border-radius: 50%; margin: 1px 0 0 -11px; font-size: 0; line-height: 0">&nbsp;</div>
+                          </td>
+                          <td valign="top" style="padding: 0 0 0 20px">
+                            <div style="font-size: 18px; font-weight: 700; letter-spacing: 0.01em; line-height: 1.35; color: #2e72b8">Agentic frameworks (BMAD, Spec-Kit)</div>
+                            <div style="font-size: 14px; line-height: 1.45; color: #5f93c0; margin-top: 4px">What are they actually trying to do?</div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
 
-        <!-- 13:15–14:15 -->
-        <li class="stop">
-          <div class="dot"></div>
-          <div class="when">13:15<span class="sep">–</span>14:15</div>
-          <div class="what">
-            <div class="title-line">What's a PR in the age of agentic engineering?</div>
-            <div class="subline">If code alone isn't enough, what do we actually commit?</div>
-          </div>
-        </li>
+                  <!-- 11:45–12:15 ShellUI -->
+                  <tr>
+                    <td width="96" valign="top" align="right" style="width: 96px; padding: 1px 18px 0 0">
+                      <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; color: #2e72b8">11:45<br /><span style="color: #8aaed0">&ndash;</span><br />12:15</div>
+                    </td>
+                    <td valign="top" style="border-left: 3px solid #75acd2; padding: 0 0 26px 0">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td width="1" valign="top" style="width: 1px; padding: 0; font-size: 0; line-height: 0">
+                            <div style="width: 16px; height: 16px; background: #ffffff; border: 3px solid #2e72b8; border-radius: 50%; margin: 1px 0 0 -11px; font-size: 0; line-height: 0">&nbsp;</div>
+                          </td>
+                          <td valign="top" style="padding: 0 0 0 20px">
+                            <div style="font-size: 18px; font-weight: 700; letter-spacing: 0.01em; line-height: 1.35; color: #2e72b8">ShellUI: building websites from the ground up</div>
+                            <!-- speaker -->
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top: 12px">
+                              <tr>
+                                <td width="16" valign="top" style="width: 16px; padding: 0">
+                                  <div style="width: 6px; height: 6px; background: #75acd2; border-radius: 50%; margin-top: 8px; font-size: 0; line-height: 0">&nbsp;</div>
+                                </td>
+                                <td valign="top" style="padding: 0">
+                                  <div style="font-size: 14px; font-weight: 700; line-height: 1.45; color: #2e72b8"><a href="https://www.linkedin.com/in/sebbarbier/" target="_blank" style="color: #2e72b8; text-decoration: none; border-bottom: 1px solid #8aaed0">Sebastien Barbier</a></div>
+                                </td>
+                              </tr>
+                            </table>
+                            <!-- two-fold points -->
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top: 10px">
+                              <tr>
+                                <td width="16" valign="top" style="width: 16px; padding: 0">
+                                  <div style="width: 7px; height: 7px; border: 1.5px solid #75acd2; border-radius: 50%; margin-top: 7px; font-size: 0; line-height: 0">&nbsp;</div>
+                                </td>
+                                <td valign="top" style="padding: 0 0 8px 0">
+                                  <div style="font-size: 13px; line-height: 1.45; color: #2e72b8"><span style="font-weight: 700">Experience feedback</span> <span style="color: #6f9cc4">&mdash; building the framework with AI.</span></div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td width="16" valign="top" style="width: 16px; padding: 0">
+                                  <div style="width: 7px; height: 7px; border: 1.5px solid #75acd2; border-radius: 50%; margin-top: 7px; font-size: 0; line-height: 0">&nbsp;</div>
+                                </td>
+                                <td valign="top" style="padding: 0">
+                                  <div style="font-size: 13px; line-height: 1.45; color: #2e72b8"><span style="font-weight: 700">Tool proposal</span> <span style="color: #6f9cc4">&mdash; controlled, agentic website building.</span></div>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
 
-        <!-- 14:15–16:15 -->
-        <li class="stop">
-          <div class="dot"></div>
-          <div class="when">14:15<span class="sep">–</span>16:15</div>
-          <div class="what">
-            <div class="title-line">Build your own</div>
-            <div class="subline">Hands-on: make your own skillset to build with ShellUI.</div>
-          </div>
-        </li>
+                  <!-- 12:15–13:15 Lunch (break) -->
+                  <tr>
+                    <td width="96" valign="top" align="right" style="width: 96px; padding: 1px 18px 0 0">
+                      <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; color: #8aaed0">12:15<br /><span style="color: #8aaed0">&ndash;</span><br />13:15</div>
+                    </td>
+                    <td valign="top" style="border-left: 3px solid #75acd2; padding: 0 0 26px 0">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td width="1" valign="top" style="width: 1px; padding: 0; font-size: 0; line-height: 0">
+                            <div style="width: 13px; height: 13px; background: #ffffff; border: 2px dashed #8aaed0; border-radius: 50%; margin: 2px 0 0 -9px; font-size: 0; line-height: 0">&nbsp;</div>
+                          </td>
+                          <td valign="top" style="padding: 0 0 0 22px">
+                            <div style="font-size: 13px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.18em; line-height: 1.4; color: #8aaed0">Lunch</div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
 
-        <!-- 16:15–17:00 -->
-        <li class="stop break">
-          <div class="dot"></div>
-          <div class="when">16:15<span class="sep">–</span>17:00</div>
-          <div class="what">
-            <div class="title-line">Apéro + discussions</div>
-          </div>
-        </li>
-      </ol>
-    </div>
+                  <!-- 13:15–14:15 What's a PR -->
+                  <tr>
+                    <td width="96" valign="top" align="right" style="width: 96px; padding: 1px 18px 0 0">
+                      <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; color: #2e72b8">13:15<br /><span style="color: #8aaed0">&ndash;</span><br />14:15</div>
+                    </td>
+                    <td valign="top" style="border-left: 3px solid #75acd2; padding: 0 0 26px 0">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td width="1" valign="top" style="width: 1px; padding: 0; font-size: 0; line-height: 0">
+                            <div style="width: 16px; height: 16px; background: #ffffff; border: 3px solid #2e72b8; border-radius: 50%; margin: 1px 0 0 -11px; font-size: 0; line-height: 0">&nbsp;</div>
+                          </td>
+                          <td valign="top" style="padding: 0 0 0 20px">
+                            <div style="font-size: 18px; font-weight: 700; letter-spacing: 0.01em; line-height: 1.35; color: #2e72b8">What&rsquo;s a PR in the age of agentic engineering?</div>
+                            <div style="font-size: 14px; line-height: 1.45; color: #5f93c0; margin-top: 4px">If code alone isn&rsquo;t enough, what do we actually commit?</div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- 14:15–16:15 Build your own -->
+                  <tr>
+                    <td width="96" valign="top" align="right" style="width: 96px; padding: 1px 18px 0 0">
+                      <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; color: #2e72b8">14:15<br /><span style="color: #8aaed0">&ndash;</span><br />16:15</div>
+                    </td>
+                    <td valign="top" style="border-left: 3px solid #75acd2; padding: 0 0 26px 0">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td width="1" valign="top" style="width: 1px; padding: 0; font-size: 0; line-height: 0">
+                            <div style="width: 16px; height: 16px; background: #ffffff; border: 3px solid #2e72b8; border-radius: 50%; margin: 1px 0 0 -11px; font-size: 0; line-height: 0">&nbsp;</div>
+                          </td>
+                          <td valign="top" style="padding: 0 0 0 20px">
+                            <div style="font-size: 18px; font-weight: 700; letter-spacing: 0.01em; line-height: 1.35; color: #2e72b8">Build your own</div>
+                            <div style="font-size: 14px; line-height: 1.45; color: #5f93c0; margin-top: 4px">Hands-on: make your own skillset to build with ShellUI.</div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- 16:15–17:00 Apéro (break, last — line stops at the dot) -->
+                  <tr>
+                    <td width="96" valign="top" align="right" style="width: 96px; padding: 1px 18px 0 0">
+                      <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; color: #8aaed0">16:15<br /><span style="color: #8aaed0">&ndash;</span><br />17:00</div>
+                    </td>
+                    <td valign="top" style="padding: 0">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td width="1" valign="top" style="width: 1px; padding: 0; font-size: 0; line-height: 0">
+                            <div style="width: 13px; height: 13px; background: #ffffff; border: 2px dashed #8aaed0; border-radius: 50%; margin: 2px 0 0 -8px; font-size: 0; line-height: 0">&nbsp;</div>
+                          </td>
+                          <td valign="top" style="padding: 0 0 0 22px">
+                            <div style="font-size: 13px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.18em; line-height: 1.4; color: #8aaed0">Apéro + discussions</div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>
