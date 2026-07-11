@@ -75,3 +75,7 @@ coverage/
 # Local email render previews
 *.preview.html
 vibehuus_day_20260605
+
+# Unprotected HTML
+unprotected*
+offers/2026-011-yfs/face-scanner-plan.md
